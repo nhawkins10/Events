@@ -1,0 +1,63 @@
+{
+	activity: [
+		{
+			id: 0,
+			name: "Running",
+			colorId: 1
+		},
+		{
+			id: 1,
+			name: "Oil Change"
+			colorId: 4
+		}
+	],
+	event: [
+		{
+			id: 0,
+			activityId: 0,
+			time: "2015-01-05 06:47:00"
+		},
+		{
+			id: 1,
+			activityId: 0,
+			time: "2015-01-03 07:03:00"
+		},
+		{
+			id: 2,
+			activityId: 1,
+			time: "2015-02-01 16:20:00"
+		}
+	],
+	color: [
+		{
+			id: 0,
+			name: "red",
+			value: "#FF0000"
+		},
+		{
+			id: 1,
+			name: "orange",
+			value: "#FF0000"
+		},
+		{
+			id: 2,
+			name: "yellow",
+			value: "#FF0000"
+		},
+		{
+			id: 3,
+			name: "green",
+			value: "#00FF00"
+		},
+		{
+			id: 4,
+			name: "blue",
+			value: "#0000FF"
+		},
+		{
+			id: 5,
+			name: "pubple",
+			value: "#FF00FF"
+		}
+	]
+}

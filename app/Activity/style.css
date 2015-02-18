@@ -1,0 +1,112 @@
+/**
+ * Main
+ */
+body {
+	background: #302D2D;
+	color: white;
+}
+
+.loadingContainer {
+	width: 100%;
+	position: absolute;
+	top: 45%;
+	text-align: center;
+	font-size: 28px;
+}
+
+.header {
+	position: fixed;
+	top: 0;
+	z-index: 100;
+	width: 100%;
+	background: rgba(48, 45, 45, .8)
+}
+
+.pageTitle {
+	font-size: 24px;
+	color: white;
+	position: relative;
+	display: inline-block;
+	margin-left: 20px;
+}
+
+ul {
+	list-style-type: none;
+	padding: 0;
+	margin: 0;
+}
+
+.addButton {
+	background: #AAA;
+	color: #302D2D;
+	width: 80px;
+	height: 80px;
+	position: fixed;
+	bottom: 0px;
+	right: 0px;
+	border-top-left-radius: 40px;
+	border-top-right-radius: 40px;
+	border-bottom-left-radius: 40px;
+	text-align: center;
+	line-height: 80px;
+	font-size: 60px;
+	cursor: pointer;
+}
+
+.backButton {
+	position: relative;
+	display: inline-block;
+	padding: 8px;
+}	
+
+/**
+ * Activity
+ */
+ .activityList {
+	margin-top: 50px;
+ }
+ 
+.activity {
+	width: 200px;
+	height: 80px;
+	float: left;
+	margin: 5px;
+}
+
+/**
+ * Event
+ */
+.eventList {
+position: relative;
+left: 50%;
+margin-top: 50px;
+}
+
+.event {
+margin: 5px;
+padding: 10px;
+font-size: 16px;
+}
+
+/**
+ * Add
+ */
+.dialog {
+	background: white;
+	color: black;
+	padding: 8px;
+}
+
+.dialogTitle {
+	font-size: 22px;
+}
+
+.dialogLabel {
+	padding-top: 12px;
+	padding-bottom: 4px;
+}
+
+.formElement {
+	width: 100%;
+	height: 40px;
+}

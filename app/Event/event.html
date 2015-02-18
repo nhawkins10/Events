@@ -1,0 +1,10 @@
+<div>
+	<div class="header">
+		<div class="backButton" data-bind="click: function() {location.href='#'}"><i class="fa fa-angle-left fa-2x"></i></div>
+		<span class="pageTitle" data-bind="text: pageTitle"></span>
+		<div class="addButton" data-bind="click: function() { shell.addItem(activityIndex()); }">+</div>
+	</div>
+	<ul class="eventList" data-bind="foreach: currentEvents">
+		<li class='event' data-bind="text:$data.time, style: {background: $root.getColor()}"></a>
+	</ul>
+</div>

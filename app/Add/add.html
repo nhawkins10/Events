@@ -1,0 +1,25 @@
+<div class="dialog">
+	<div class="dialogTitle">Add Item</div>
+	<form name="newItem" data-bind="submit: addItem">
+		<div class="dialogLabel">Activity:</div>
+		<select class="formElement" name="activity" data-bind="foreach: displayActivities, value: selectedActivity">
+			<option data-bind="text: $data.name, attr: {value: $data.id}"></option>
+		</select>
+		
+		<!-- The new activity form is only displayed when 'add new activity' is selected from the activity dropdown -->
+		<div data-bind="visible: selectedActivity() == 'new'">
+			<div class="dialogLabel">New Activity Name:</div>
+			<input class="formElement" type="text" name="newActivityName" placeholder="Name"/>
+			<div class="dialogLabel">New Activity Color:</div>
+			<select class="formElement" name="newActivityColor" data-bind="options: colors, optionsText: 'name', optionsValue: 'id'"></select>
+			<button data-bind="click: addActivity">Save</button>
+		</div>
+		
+		<div class="dialogLabel">Date:</div>
+		<input class="formElement" type="date" name="date" data-bind="attr: {value: date}" />
+		<div class="dialogLabel">Time:</div>
+		<input class="formElement" type="time" name="time" data-bind="attr: {value: time}"/>
+		<button data-bind="click: closeDialog">Cancel</button>
+		<button type="submit">Add</button>
+	</form>
+</div>
