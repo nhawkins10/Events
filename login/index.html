@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="../events.js"></script>
+
+<!--<link rel="stylesheet" type="text/css" href="login.css" />-->
+</head>
+<body>
+<div id='loginForm'>
+	<input id='loginUser' type='email' placeholder='Username' required>
+	<input id='loginPw' type='password' placeholder='Password' required>
+	<input type='button' value='Login' onclick='javascript:Events.authentication.login()'>
+	<input type='button' value='Sign up' onclick='javascript:Events.authentication.createUser()'>
+</div>
+</body>
+</html>

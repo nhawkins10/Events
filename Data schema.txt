@@ -1,0 +1,32 @@
+user
+|- 0
+|	|- uid
+|	|- password
+|	|- any other user info
+|	|- categories
+|		|- running
+|			|- color
+|			|- events
+|				|- timestamp
+|				|- timestamp
+|		|- check oil
+|			|- color
+|			|- events
+|				|- timestamp
+|				|- timestamp
+|				|- timestamp
+|- 1
+	|- uid
+	|- password
+	|- other user info
+	|- categories
+		|- biking
+			|- color
+			|- events
+				|- timestamp
+		|- Took meds
+			|- color
+			|- events
+				|- timestamp
+				|- timestamp
+				|- timestamp

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="../events.js"></script>
+<script>
+//check if user is authenticated before page finishes loading
+if (!Events.authentication.userAuthenticated()) {
+	location.href = "../login";
+}
+</script>
+
+<!--<link rel="stylesheet" type="text/css" href="home.css">-->
+</head>
+<body>
+<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()"><br>
+<input type="date" id="eventDate">
+<input type="time" id="eventTime">
+<input type="button" value="Add" onclick="javascript:Events.event.addEvent()">
+<h2 id="eventHeader"></h2>
+<ul id="entryList">
+</ul>
+<input type="button" value="Delete category" onclick="javascript:Events.category.removeCategory()">
+<script>
+	Events.event.displayEvent();
+</script>
+</body>
+</html>

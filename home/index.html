@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="../events.js"></script>
+<script>
+//check if user is authenticated before page finishes loading
+if (!Events.authentication.userAuthenticated()) {
+	location.href = "../login";
+}
+</script>
+
+<!--<link rel="stylesheet" type="text/css" href="home.css">-->
+</head>
+<body>
+<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()"><br>
+<input id="newCatName" type="text" placeholder="New Category">
+<select id="newCatColor">
+	<option value="1">Red</option>
+	<option value="2">Orange</option>
+	<option value="3">Yellow</option>
+	<option value="4">Green</option>
+	<option value="5">Blue</option>
+	<option value="6">Purple</option>
+</select>
+<input type="button" value="Add" onclick="javascript:Events.category.addCategory()">
+<ul id="categoryList">
+</ul>
+
+<script>	
+	Events.category.displayAllCategories();
+</script>
+</body>
+</html>
