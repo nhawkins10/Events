@@ -3,6 +3,12 @@
 <head>
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
 <script src="../events.js"></script>
+<script>
+//check if user is authenticated before page finishes loading
+if (Events.authentication.userAuthenticated()) {
+	location.href = "../home";
+}
+</script>
 
 <!--<link rel="stylesheet" type="text/css" href="login.css" />-->
 </head>
