@@ -13,10 +13,9 @@ if (!Events.authentication.userAuthenticated()) {
 <!--<link rel="stylesheet" type="text/css" href="home.css">-->
 </head>
 <body>
-<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()"><br>
-<input type="date" id="eventDate">
-<input type="time" id="eventTime">
-<input type="button" value="Add" onclick="javascript:Events.event.addEvent()">
+<a href="../home">Back</a>
+<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()">
+<input id="add" type="button" value="+" onclick="javascript:Events.event.addEvent()">
 <h2 id="eventHeader"></h2>
 <ul id="entryList">
 </ul>

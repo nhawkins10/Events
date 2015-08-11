@@ -13,17 +13,8 @@ if (!Events.authentication.userAuthenticated()) {
 <!--<link rel="stylesheet" type="text/css" href="home.css">-->
 </head>
 <body>
-<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()"><br>
-<input id="newCatName" type="text" placeholder="New Category">
-<select id="newCatColor">
-	<option value="1">Red</option>
-	<option value="2">Orange</option>
-	<option value="3">Yellow</option>
-	<option value="4">Green</option>
-	<option value="5">Blue</option>
-	<option value="6">Purple</option>
-</select>
-<input type="button" value="Add" onclick="javascript:Events.category.addCategory()">
+<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()">
+<input id="add" type="button" value="+" onclick="javascript:Events.event.addEvent()">
 <ul id="categoryList">
 </ul>
 

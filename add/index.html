@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<head>
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../events.js"></script>
+<script>
+//check if user is authenticated before page finishes loading
+if (!Events.authentication.userAuthenticated()) {
+	location.href = "../login";
+}
+</script>
+
+<link rel="stylesheet" type="text/css" href="/add/add.css">
+</head>
+<body>
+<input type="button" value="Cancel" onclick="javascript:Events.event.cancelAdd()">
+<input type="button" value="Save" onclick="javascript:Events.event.saveAdd()"><br>
+<select id="categoryPicker">
+</select>
+<input id="addCatBtn" type="button" value="Add category" onclick="javascript:Events.category.toggleNewCategory()">
+<span id="newCatForm" class="hidden">
+	<input id="newCatName" type="text" placeholder="New Category">
+	<select id="newCatColor">
+		<option value="1">Red</option>
+		<option value="2">Orange</option>
+		<option value="3">Yellow</option>
+		<option value="4">Green</option>
+		<option value="5">Blue</option>
+		<option value="6">Purple</option>
+	</select>
+</span>
+<br>
+<input type="date" id="eventDate">
+<input type="time" id="eventTime">
+
+<script>
+	Events.event.displayAdd();
+</script>
+</body>
+</html>

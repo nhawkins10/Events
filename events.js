@@ -149,19 +149,21 @@ var Events = (function() {
 			/**
 			 *	This function adds a new category to the 
 			 * 	current user's list of categories.
-			 *	@param none
+			 *	@param name - the name of the category
+			 *	@param color - the color for the category
+			 *	@return - firebase reference to new category
 			 */
-			addCategory: function() {
-				var authTokens = JSON.parse(localStorage.events),
-					newCatName = document.getElementById('newCatName').value,
-					newCatColor = document.getElementById('newCatColor').value;
+			addCategory: function(name, color) {
+				var authTokens = JSON.parse(localStorage.events);
 					
 				if (newCatName != "") {
-					dataRef.child("users").child(authTokens.uid).child("categories").push({
-						name: newCatName,
-						color: newCatColor
+					return dataRef.child("users").child(authTokens.uid).child("categories").push({
+						name: name,
+						color: color
 					});					
 				}
+				
+				return null;
 			},
 			
 			/**
@@ -177,6 +179,18 @@ var Events = (function() {
 				
 				//return to the list of categories
 				location.href = "../home";
+			},
+			
+			toggleNewCategory: function() {
+				if ($("#newCatForm").hasClass("hidden")) {
+					$("#newCatForm").removeClass("hidden");
+					$("#categoryPicker").addClass("hidden");
+					$("#addCatBtn").val("Cancel");
+				} else {
+					$("#newCatForm").addClass("hidden");
+					$("#categoryPicker").removeClass("hidden");
+					$("#addCatBtn").val("Add category");
+				}
 			}
 		},
 		
@@ -194,10 +208,6 @@ var Events = (function() {
 			displayEvent: function() {
 				var key = location.search.substring(3, location.search.length-1),
 					authTokens = JSON.parse(localStorage.events);
-					
-				//set default date and time
-				document.getElementById("eventDate").value = toDateInputValue();
-				document.getElementById("eventTime").value = toTimeInputValue();
 				
 				//set the title to the name of the category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
@@ -218,25 +228,77 @@ var Events = (function() {
 			 */
 			displayEntry: function(timestamp) {
 				var entryList = document.getElementById("entryList");
-				entryList.innerHTML = entryList.innerHTML + 
-					"<li>" + timestamp + "</li>";
+				entryList.innerHTML = "<li>" + timestamp + "</li>" + entryList.innerHTML;
 			},
 			
-			/**
-			 *	This function adds a new event (timestamp) to the 
-			 * 	currently selected category.
-			 *	@param none
-			 */
-			addEvent: function() {	
+			addEvent: function() {
+				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
+				
+				//currently viewing specific category
+				if (key) {
+					location.href = "../add?q=" + key;
+				
+				//viewing all categories
+				} else {
+					location.href = "../add";
+				}
+			},
+			
+			displayAdd: function() {
+				var authTokens = JSON.parse(localStorage.events),
+					key = location.search ? location.search.substring(3, location.search.length-1) : "",
+					dropDown = document.getElementById("categoryPicker");
+				
+				//set default date and time
+				document.getElementById("eventDate").value = toDateInputValue();
+				document.getElementById("eventTime").value = toTimeInputValue();
+				
+				//populate the category dropdown
+				dataRef.child("users").child(authTokens.uid).child("categories").on("child_added", function(snapshot) {
+					var category = snapshot.val();
+						
+					dropDown.innerHTML = dropDown.innerHTML + 
+						"<option value='" + snapshot.key() + "' " + (key == snapshot.key() ? "selected" : "") + ">" + category.name + "</option>";
+				});
+			},
+			
+			saveAdd: function() {
 				var date = document.getElementById("eventDate").value,
 					time = document.getElementById("eventTime").value,
-					key = location.search.substring(3, location.search.length-1),
-					authTokens = JSON.parse(localStorage.events);
+					authTokens = JSON.parse(localStorage.events),
+					categoryKey = "",
+					key = location.search ? location.search.substring(3, location.search.length-1) : "";
+					
+				//determine the category
+				if ($("#categoryPicker").hasClass("hidden")) {
+					var category = document.getElementById("newCatName").value,
+						categoryColor = document.getElementById("newCatColor").value;
+					
+					categoryKey = Events.category.addCategory(category, categoryColor).key();
+				} else {
+					categoryKey = document.getElementById("categoryPicker").value
+				}
 				
 				//send the new value to the database
-				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").push({
+				dataRef.child("users").child(authTokens.uid).child("categories").child(categoryKey).child("events").push({
 					time: date + " " + time
 				});
+				
+				if (key) {
+					location.href = "../detail?q=" + key;
+				} else {
+					location.href = "../home";
+				}
+			},
+			
+			cancelAdd: function() {
+				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
+				
+				if (key) {
+					location.href = "../detail?q=" + key;
+				} else {
+					location.href = "../home";
+				}
 			}
 		}
 	};
