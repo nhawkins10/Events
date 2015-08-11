@@ -181,6 +181,11 @@ var Events = (function() {
 				location.href = "../home";
 			},
 			
+			/**
+			 *	This function toggles displaying the create new 
+			 *	category form on the add event page.
+			 *	@param none
+			 */
 			toggleNewCategory: function() {
 				if ($("#newCatForm").hasClass("hidden")) {
 					$("#newCatForm").removeClass("hidden");
@@ -231,6 +236,10 @@ var Events = (function() {
 				entryList.innerHTML = "<li>" + timestamp + "</li>" + entryList.innerHTML;
 			},
 			
+			/**
+			 *	This function determines if the user is adding to a specific
+			 *	category and redirects to the correct add page
+			 */
 			addEvent: function() {
 				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
 				
@@ -244,6 +253,10 @@ var Events = (function() {
 				}
 			},
 			
+			/**
+			 *	This function populates the data on the add event page.
+			 * @param none
+			 */
 			displayAdd: function() {
 				var authTokens = JSON.parse(localStorage.events),
 					key = location.search ? location.search.substring(3, location.search.length-1) : "",
@@ -262,6 +275,10 @@ var Events = (function() {
 				});
 			},
 			
+			/**
+			 *	This function saves the new event. It will also handle 
+			 *	creating a new category if necessary.
+			 */
 			saveAdd: function() {
 				var date = document.getElementById("eventDate").value,
 					time = document.getElementById("eventTime").value,
@@ -291,6 +308,11 @@ var Events = (function() {
 				}
 			},
 			
+			/**
+			 *	This function discards the new event data, and
+			 *	returns to the previously viewed page.
+			 * 	@param none
+			 */
 			cancelAdd: function() {
 				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
 				
