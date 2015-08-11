@@ -63,6 +63,18 @@ var Events = (function() {
 				location.href = "../login";
 			},
 			
+			toggleCreateUser: function() {
+				if ($("#signUpBtn").hasClass("hidden")) {
+					$("#signUpBtn").removeClass("hidden");
+					$("#loginBtn").addClass("hidden");
+					$("#toggleCreateUserBtn").text("Already have an account");
+				} else {
+					$("#signUpBtn").addClass("hidden");
+					$("#loginBtn").removeClass("hidden");
+					$("#toggleCreateUserBtn").text("Create an account");
+				}
+			},
+			
 			/**
 			 *	This function allows a new user to be created.
 			 * 	@param none

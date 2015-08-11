@@ -2,6 +2,7 @@
 <html>
 <head>
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 <script src="../events.js"></script>
 <script>
 //check if user is authenticated before page finishes loading
@@ -10,14 +11,19 @@ if (Events.authentication.userAuthenticated()) {
 }
 </script>
 
-<!--<link rel="stylesheet" type="text/css" href="login.css" />-->
+<link rel="stylesheet" type="text/css" href="../main.css" />
+<link rel="stylesheet" type="text/css" href="login.css" />
 </head>
 <body>
+<div class='headerBar'>
+	<div class='headerTitle'>Events</div>
+</div>
 <div id='loginForm'>
-	<input id='loginUser' type='email' placeholder='Username' required>
-	<input id='loginPw' type='password' placeholder='Password' required>
-	<input type='button' value='Login' onclick='javascript:Events.authentication.login()'>
-	<input type='button' value='Sign up' onclick='javascript:Events.authentication.createUser()'>
+	<input class='loginInput' id='loginUser' type='email' placeholder='Username' required>
+	<input class='loginInput' id='loginPw' type='password' placeholder='Password' required>
+	<input id='loginBtn' type='button' value='Login' onclick='javascript:Events.authentication.login()'>
+	<input class='hidden' id='signUpBtn' type='button' value='Sign up' onclick='javascript:Events.authentication.createUser()'>
+	<a id='toggleCreateUserBtn' href="javascript:Events.authentication.toggleCreateUser()">Create an account</a>
 </div>
 </body>
 </html>
