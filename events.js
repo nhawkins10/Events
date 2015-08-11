@@ -215,10 +215,10 @@ var Events = (function() {
 					authTokens = JSON.parse(localStorage.events);
 				
 				//set the title to the name of the category
-				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
-					var name = snapshot.val();
-					document.getElementById("eventHeader").innerHTML = name.name;
-				});
+				//dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
+				//	var name = snapshot.val();
+				//	document.getElementById("eventHeader").innerHTML = name.name;
+				//});
 				
 				//display all events(timestamps) associated with the given category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
