@@ -172,7 +172,7 @@ var Events = (function() {
 			 */
 			removeCategory: function() {
 				var authTokens = JSON.parse(localStorage.events),
-					key = location.search.substring(3, location.search.length-1);
+					key = location.search.substring(3, location.search.length);
 				
 				//remove the data
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
@@ -211,14 +211,14 @@ var Events = (function() {
 			 *	@param none
 			 */
 			displayEvent: function() {
-				var key = location.search.substring(3, location.search.length-1),
+				var key = location.search.substring(3, location.search.length),
 					authTokens = JSON.parse(localStorage.events);
 				
 				//set the title to the name of the category
-				//dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
-				//	var name = snapshot.val();
-				//	document.getElementById("eventHeader").innerHTML = name.name;
-				//});
+				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
+					var name = snapshot.val();
+					document.getElementById("eventHeader").innerHTML = name.name;
+				});
 				
 				//display all events(timestamps) associated with the given category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
@@ -241,7 +241,7 @@ var Events = (function() {
 			 *	category and redirects to the correct add page
 			 */
 			addEvent: function() {
-				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
+				var key = location.search ? location.search.substring(3, location.search.length) : "";
 				
 				//currently viewing specific category
 				if (key) {
@@ -259,7 +259,7 @@ var Events = (function() {
 			 */
 			displayAdd: function() {
 				var authTokens = JSON.parse(localStorage.events),
-					key = location.search ? location.search.substring(3, location.search.length-1) : "",
+					key = location.search ? location.search.substring(3, location.search.length) : "",
 					dropDown = document.getElementById("categoryPicker");
 				
 				//set default date and time
@@ -284,7 +284,7 @@ var Events = (function() {
 					time = document.getElementById("eventTime").value,
 					authTokens = JSON.parse(localStorage.events),
 					categoryKey = "",
-					key = location.search ? location.search.substring(3, location.search.length-1) : "";
+					key = location.search ? location.search.substring(3, location.search.length) : "";
 					
 				//determine the category
 				if ($("#categoryPicker").hasClass("hidden")) {
@@ -314,7 +314,7 @@ var Events = (function() {
 			 * 	@param none
 			 */
 			cancelAdd: function() {
-				var key = location.search ? location.search.substring(3, location.search.length-1) : "";
+				var key = location.search ? location.search.substring(3, location.search.length) : "";
 				
 				if (key) {
 					location.href = "../detail?q=" + key;
