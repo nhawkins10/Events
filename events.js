@@ -45,6 +45,17 @@ var Events = (function() {
 					}, function(error, userData) {
 						if (error) {
 							console.log("Login Failed!", error);
+							switch (error.code) {
+								case "INVALID_EMAIL":
+								case "INVALID_PASSWORD":
+									$("#loginError").text("The username or password is incorrect.");
+									break;
+								case "INVALID_USER":
+									$("#loginError").text("The specified user account doesn't exist.");
+									break;
+								default:
+									$("#loginError").text("There was an error logging in.");
+							}
 						} else {
 							console.log("Authenticated successfully");
 							

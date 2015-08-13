@@ -1,0 +1,26 @@
+body {
+	padding: 0;
+	margin: 0;
+}
+
+.hidden {
+	display: none;
+}
+
+.headerBar {
+	width: 100%;
+	height: 3em;
+	background-color: #aaa;
+}
+
+.headerTitle {
+	position: absolute;
+    left: 20%;
+    width: 60%;
+    text-align: center;
+    line-height: 3em;
+}
+
+input {
+	height: 2em;
+}

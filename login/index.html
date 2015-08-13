@@ -21,8 +21,9 @@ if (Events.authentication.userAuthenticated()) {
 <div id='loginForm'>
 	<input class='loginInput' id='loginUser' type='email' placeholder='Username' required>
 	<input class='loginInput' id='loginPw' type='password' placeholder='Password' required>
-	<input id='loginBtn' type='button' value='Login' onclick='javascript:Events.authentication.login()'>
-	<input class='hidden' id='signUpBtn' type='button' value='Sign up' onclick='javascript:Events.authentication.createUser()'>
+	<div class='error' id='loginError'></div>
+	<button class='button' id='loginBtn' onclick='javascript:Events.authentication.login()'>Login</button>
+	<button class='button hidden' id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>Sign up</button>
 	<a id='toggleCreateUserBtn' href="javascript:Events.authentication.toggleCreateUser()">Create an account</a>
 </div>
 </body>
