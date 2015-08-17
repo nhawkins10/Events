@@ -79,10 +79,12 @@ var Events = (function() {
 					$("#signUpBtn").removeClass("hidden");
 					$("#loginBtn").addClass("hidden");
 					$("#toggleCreateUserBtn").text("Already have an account");
+					$("#loginError").text("");
 				} else {
 					$("#signUpBtn").addClass("hidden");
 					$("#loginBtn").removeClass("hidden");
 					$("#toggleCreateUserBtn").text("Create an account");
+					$("#loginError").text("");
 				}
 			},
 			
@@ -102,6 +104,16 @@ var Events = (function() {
 					}, function(error, userData) {
 						if (error) {
 							console.log("Create User Failed!", error);
+							switch (error.code) {
+								case "EMAIL_TAKEN":
+									$("#loginError").text("That username is already taken.");
+									break
+								case "INVALID_EMAIL":
+									$("#loginError").text("The username must be an email address.");
+									break;
+								default:
+									$("#loginError").text("There was an error creating an account.");
+							}
 						} else {
 							console.log("Authenticated successfully", userData);
 							
