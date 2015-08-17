@@ -22,6 +22,33 @@ var Events = (function() {
 		return local.split(".")[0];
 	};
 	
+	function translateColor(colorId) {
+		var color = '';
+		switch (colorId) {
+			case "1":
+				color = "red";
+				break;
+			case "2":
+				color = "orange";
+				break;
+			case "3":
+				color = "yellow";
+				break;
+			case "4":
+				color = "green";
+				break;
+			case "5":
+				color = "blue";
+				break;
+			case "6":
+				color = "purple";
+				break;
+			default:
+				color = "blue";
+		}
+		return color;
+	};
+	
 	return {
 		/**
 		 *	The authentication module exposes functions related 
@@ -178,7 +205,7 @@ var Events = (function() {
 			displayCategory: function(name, color, key) {
 				var categoryList = document.getElementById("categoryList");
 				categoryList.innerHTML = categoryList.innerHTML + 
-					"<li><a href='../detail?q=" + key + "'>" + name + "</a></li>";
+					"<a href='../detail?q=" + key + "'><li class='categoryItem " + translateColor(color) + "'>" + name + "</li></a>";
 			},
 			
 			/**

@@ -11,13 +11,17 @@ if (!Events.authentication.userAuthenticated()) {
 }
 </script>
 
-<!--<link rel="stylesheet" type="text/css" href="home.css">-->
+<link rel="stylesheet" type="text/css" href="../main.css">
+<link rel="stylesheet" type="text/css" href="home.css">
 </head>
 <body>
-<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()">
-<input id="add" type="button" value="+" onclick="javascript:Events.event.addEvent()">
+<div class='headerBar'>
+	<div class='headerTitle'>Events</div>
+</div>
+<div id="add" onclick="javascript:Events.event.addEvent()">+</div>
 <ul id="categoryList">
 </ul>
+<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()">
 
 <script>	
 	Events.category.displayAllCategories();
