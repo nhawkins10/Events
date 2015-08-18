@@ -22,11 +22,14 @@ if (!Events.authentication.userAuthenticated()) {
 <body>
 <div class='headerBar'>
 	<div class='headerTitle'>Events</div>
+	<div class='logoutHeader' onclick='javascript:Events.authentication.logout()'>Sign out</div>
 </div>
 <div id="add" onclick="javascript:Events.event.addEvent()">+</div>
 <ul id="categoryList">
 </ul>
-<input id="logout" type="button" value="Log out" onclick="javascript:Events.authentication.logout()">
+<div class='footerBar'>
+	<div class='logoutFooter' onclick='javascript:Events.authentication.logoug()'>Sign out</div>
+</div>
 
 <script>	
 	Events.category.displayAllCategories();

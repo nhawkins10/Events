@@ -5,7 +5,10 @@
     position: relative;
     top: 3em;
     width: 100%;
+	float: left;
     z-index: 100;
+	margin-bottom: 3em;
+    background-color: #fff;
 }
 
 @media (max-width: 699px) {

@@ -53,6 +53,7 @@ a {
 	font-weight: bold;
 }
 
+/* position the title in the center on small displays */
 @media (max-width: 699px) {
 	.headerTitle {
 		left: 20%;
@@ -60,9 +61,48 @@ a {
 	}
 }
 
+/* position the title to the right on large displays */
 @media (min-width: 700px) {
 	.headerTitle {
 		left: 50px;
+	}
+}
+
+.logoutHeader {
+	position: absolute;
+    right: 50px;
+    font-size: .8em;
+    line-height: 3.6em;
+	cursor: pointer;
+}
+
+/* hide the header logout button on small displays */
+@media (max-width: 699px) {
+	.logoutHeader {
+		display: none;
+	}
+}
+
+.footerBar {
+	position: fixed;
+    bottom: 0px;
+    width: 100%;
+    height: 3em;
+}
+
+.logoutFooter {
+	font-size: .8em;
+    line-height: 3.8em;
+    height: 3.7em;
+    left: 15px;
+    position: absolute;
+	cursor: pointer;
+}
+
+/* hide the footer logout button on large displays */
+@media (min-width: 700px) {
+	.logoutFooter {
+		display: none;
 	}
 }
 
