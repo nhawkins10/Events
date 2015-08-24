@@ -64,7 +64,7 @@ a {
 /* position the title to the right on large displays */
 @media (min-width: 700px) {
 	.headerTitle {
-		left: 50px;
+		left: 70px;
 	}
 }
 
@@ -81,6 +81,15 @@ a {
 	.logoutHeader {
 		display: none;
 	}
+}
+
+.backButton {
+	width: 20px;
+    display: inline-block;
+    float: left;
+    margin-top: .9em;
+    margin-left: 10px;
+	cursor: pointer;
 }
 
 .footerBar {

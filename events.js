@@ -8,6 +8,7 @@
  */
 var Events = (function() {
 	var dataRef = new Firebase("https://flickering-torch-7386.firebaseio.com/");
+	var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
 	function toDateInputValue() {
 		var local = new Date();
@@ -48,6 +49,45 @@ var Events = (function() {
 		}
 		return color;
 	};
+	
+	function formatDate(timestamp) {
+		var date = new Date(timestamp),
+			today = new Date(),
+			dateString = '';
+		
+		if (isToday(date)) {
+			dateString += date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
+			dateString += ":";
+			dateString += date.getMinutes();
+			dateString += date.getHours() > 12 ? " pm" : " am";
+		} else {
+			dateString += months[date.getMonth()];
+			dateString += " " + date.getDate();
+			if (date.getFullYear() < today.getFullYear()) {
+				dateString += ", " + date.getFullYear();
+			}
+			
+			//format time
+			dateString += "  " + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours());
+			dateString += ":";
+			dateString += date.getMinutes();
+			dateString += date.getHours() > 12 ? " pm" : " am";
+		}
+		
+		return dateString;
+	};
+	
+	function isToday(date) {
+		var today = new Date();
+		
+		if (date.getFullYear() === today.getFullYear() &&
+			date.getMonth() === today.getMonth() &&
+			date.getDate() === today.getDate()) {
+			return true;
+		}
+		
+		return false;
+	}
 	
 	return {
 		/**
@@ -274,18 +314,24 @@ var Events = (function() {
 			 */
 			displayEvent: function() {
 				var key = location.search.substring(3, location.search.length),
-					authTokens = JSON.parse(localStorage.events);
+					authTokens = JSON.parse(localStorage.events),
+					color = '',
+					self = this;
 				
 				//set the title to the name of the category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
 					var name = snapshot.val();
 					document.getElementById("eventHeader").innerHTML = name.name;
+					var elements = document.getElementById('eventList').children;
+					for (var i=0; i<elements.length; i++) {
+						elements[i].className += " " + translateColor(name.color);
+					}
 				});
 				
 				//display all events(timestamps) associated with the given category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
-					Events.event.displayEntry(temp.time);
+					Events.event.displayEntry(temp.time, self.color);
 				});
 			},
 			
@@ -293,9 +339,10 @@ var Events = (function() {
 			 * 	This function creates the markup to display an event (timestamp) for a category.
 			 * 	@param timestamp - the time of the event
 			 */
-			displayEntry: function(timestamp) {
-				var entryList = document.getElementById("entryList");
-				entryList.innerHTML = "<li>" + timestamp + "</li>" + entryList.innerHTML;
+			displayEntry: function(timestamp, color) {
+				console.log(color);
+				var entryList = document.getElementById("eventList");
+				entryList.innerHTML = "<li class='eventItem'>" + formatDate(timestamp) + "</li>" + entryList.innerHTML;
 			},
 			
 			/**
