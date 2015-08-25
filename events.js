@@ -55,9 +55,6 @@ var Events = (function() {
 			date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]),
 			today = new Date(),
 			dateString = "";
-			
-			alert(timestamp);
-			alert(date);
 		
 		if (isToday(date)) {
 			dateString += date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
