@@ -245,7 +245,7 @@ var Events = (function() {
 			displayCategory: function(name, color, key) {
 				var categoryList = document.getElementById("categoryList");
 				categoryList.innerHTML = categoryList.innerHTML + 
-					"<a href='../detail?q=" + key + "'><li class='categoryItem " + translateColor(color) + "'>" + name + "</li></a>";
+					"<li class='categoryItem " + translateColor(color) + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
 			},
 			
 			/**
@@ -430,6 +430,16 @@ var Events = (function() {
 				} else {
 					location.href = "../home";
 				}
+			}
+		},
+		
+		navigate: {
+			toDetail: function(key) {
+				location.href = "../detail?q=" + key;
+			},
+			
+			toHome: function() {
+				location.href = "../home";
 			}
 		}
 	};
