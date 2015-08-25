@@ -51,7 +51,8 @@ var Events = (function() {
 	};
 	
 	function formatDate(timestamp) {
-		var date = new Date(timestamp),
+		var arr = timestamp.split(/[- :]/),
+			date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]),
 			today = new Date(),
 			dateString = "";
 			
