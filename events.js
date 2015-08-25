@@ -62,7 +62,7 @@ var Events = (function() {
 			dateString += date.getHours() > 12 ? " pm" : " am";
 		} else {
 			dateString += months[date.getMonth()];
-			dateString += " " + date.getDate();
+			/*dateString += " " + date.getDate();
 			if (date.getFullYear() < today.getFullYear()) {
 				dateString += ", " + date.getFullYear();
 			}
@@ -71,7 +71,7 @@ var Events = (function() {
 			dateString += "  " + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours());
 			dateString += ":";
 			dateString += date.getMinutes();
-			dateString += date.getHours() > 12 ? " pm" : " am";
+			dateString += date.getHours() > 12 ? " pm" : " am";*/
 		}
 		
 		return dateString;
