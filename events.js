@@ -53,7 +53,7 @@ var Events = (function() {
 	function formatDate(timestamp) {
 		var date = new Date(timestamp),
 			today = new Date(),
-			dateString = '';
+			dateString = "";
 		
 		if (isToday(date)) {
 			dateString += date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
