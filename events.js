@@ -233,6 +233,10 @@ var Events = (function() {
 				var authTokens = JSON.parse(localStorage.events);
 				dataRef.child("users").child(authTokens.uid).child("categories").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
+					//hide loading spinner
+					document.getElementById('categoryList').className = "";
+					
+					//create HTML for category
 					Events.category.displayCategory(temp.name, temp.color, snapshot.key());
 				});
 			},
