@@ -234,7 +234,7 @@ var Events = (function() {
 				dataRef.child("users").child(authTokens.uid).child("categories").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
 					//hide loading spinner
-					document.getElementById('categoryList').className = "";
+					document.getElementById('spinner').className = "";
 					
 					//create HTML for category
 					Events.category.displayCategory(temp.name, temp.color, snapshot.key());
@@ -279,13 +279,16 @@ var Events = (function() {
 			 */
 			removeCategory: function() {
 				var authTokens = JSON.parse(localStorage.events),
-					key = location.search.substring(3, location.search.length);
+					key = location.search.substring(3, location.search.length),
+					verifyDelete = confirm("Are you sure you want to delete this category and all it's data?");
 				
-				//remove the data
-				dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
-				
-				//return to the list of categories
-				location.href = "../home";
+				if (verifyDelete) {
+					//remove the data
+					dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
+					
+					//return to the list of categories
+					location.href = "../home";
+				}
 			},
 			
 			/**
@@ -336,6 +339,10 @@ var Events = (function() {
 				//display all events(timestamps) associated with the given category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
+					//hide loading spinner
+					document.getElementById('spinner').className = "";
+					
+					//create HTML for evetn
 					Events.event.displayEntry(temp.time, self.color);
 				});
 			},

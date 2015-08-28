@@ -103,14 +103,15 @@ a {
 	font-size: .8em;
     line-height: 3.8em;
     height: 3.7em;
-    left: 15px;
-    position: absolute;
+    margin-left: 15px;
+    position: relative;
 	cursor: pointer;
+	float: left;
 }
 
 /* hide the footer logout button on large displays */
 @media (min-width: 700px) {
-	.logoutFooter {
+	.logoutFooter.toggle {
 		display: none;
 	}
 }

@@ -26,11 +26,12 @@ if (!Events.authentication.userAuthenticated()) {
 	<div class='logoutHeader' onclick='javascript:Events.authentication.logout()'>Sign out</div>
 </div>
 <div id="add" onclick="javascript:Events.event.addEvent()">+</div>
+<div class="spinner" id="spinner"></div>
 <ul id="eventList">
 </ul>
-<input type="button" value="Delete category" onclick="javascript:Events.category.removeCategory()">
 <div class='footerBar'>
-	<div class='logoutFooter' onclick='javascript:Events.authentication.logout()'>Sign out</div>
+	<div class='logoutFooter toggle' onclick='javascript:Events.authentication.logout()'>Sign out</div>
+	<div class='logoutFooter' onclick='javascript:Events.category.removeCategory()'>Delete category</div>
 </div>
 
 <script>
