@@ -342,7 +342,7 @@ var Events = (function() {
 					//hide loading spinner
 					document.getElementById('spinner').className = "";
 					
-					//create HTML for evetn
+					//create HTML for event
 					Events.event.displayEntry(temp.time, self.color);
 				});
 			},

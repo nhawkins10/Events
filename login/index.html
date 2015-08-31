@@ -4,16 +4,6 @@
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <head>
-<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
-<script src="../events.js"></script>
-<script>
-//check if user is authenticated before page finishes loading
-if (Events.authentication.userAuthenticated()) {
-	location.href = "../home";
-}
-</script>
-
 <link rel="stylesheet" type="text/css" href="../main.css" />
 <link rel="stylesheet" type="text/css" href="login.css" />
 
@@ -32,5 +22,15 @@ if (Events.authentication.userAuthenticated()) {
 	<button class='button hidden' id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>Sign up</button>
 	<a id='toggleCreateUserBtn' href="javascript:Events.authentication.toggleCreateUser()">Create an account</a>
 </div>
+
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+<script src="../events.js"></script>
+<script>
+//check if user is authenticated before page finishes loading
+if (Events.authentication.userAuthenticated()) {
+	location.href = "../home";
+}
+</script>
 </body>
 </html>
