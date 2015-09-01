@@ -103,8 +103,7 @@ var Events = (function() {
 			 */
 			login: function(userParam, pwParam) {	
 				var user = userParam || document.getElementById('loginUser').value;
-				var pw = pwParam || document.getElementById('loginPw').value
-				console.log(user + " : " + pw);
+				var pw = pwParam || document.getElementById('loginPw').value;
 				
 				if (user != "" && pw != "") {
 					dataRef.authWithPassword({
@@ -162,8 +161,7 @@ var Events = (function() {
 			 */
 			createUser: function() {
 				var user = document.getElementById('loginUser').value,
-					pw = document.getElementById('loginPw').value
-				console.log(user + " : " + pw);
+					pw = document.getElementById('loginPw').value;
 				
 				if (user != "" && pw != "") {
 					dataRef.createUser({
@@ -300,11 +298,11 @@ var Events = (function() {
 				if ($("#newCatForm").hasClass("hidden")) {
 					$("#newCatForm").removeClass("hidden");
 					$("#categoryPicker").addClass("hidden");
-					$("#addCatBtn").val("Cancel");
+					$(".addCatBtn").addClass("rotate");
 				} else {
 					$("#newCatForm").addClass("hidden");
 					$("#categoryPicker").removeClass("hidden");
-					$("#addCatBtn").val("Add category");
+					$(".addCatBtn").removeClass("rotate");
 				}
 			}
 		},
