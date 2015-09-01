@@ -59,7 +59,7 @@ var Events = (function() {
 		if (isToday(date)) {
 			dateString += date.getHours() > 12 ? date.getHours() - 12 : date.getHours();
 			dateString += ":";
-			dateString += date.getMinutes();
+			dateString += date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
 			dateString += date.getHours() > 12 ? " pm" : " am";
 		} else {
 			dateString += months[date.getMonth()];
@@ -71,7 +71,7 @@ var Events = (function() {
 			//format time
 			dateString += "  " + (date.getHours() > 12 ? date.getHours() - 12 : date.getHours());
 			dateString += ":";
-			dateString += date.getMinutes();
+			dateString += date.getMinutes() > 9 ? date.getMinutes() : "0" + date.getMinutes();
 			dateString += date.getHours() > 12 ? " pm" : " am";
 		}
 		
