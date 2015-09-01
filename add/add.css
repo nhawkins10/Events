@@ -1,4 +1,4 @@
-@media (min-width: 400px) {
+@media (min-width: 700px) {
 	.headerBtn {
 		display: none;
 	}	
@@ -18,7 +18,7 @@
 	right: 30px;
 }
 
-@media (max-width: 399px) {
+@media (max-width: 699px) {
 	.dialogBtn {
 		display: none;
 	}
