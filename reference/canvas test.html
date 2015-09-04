@@ -1,0 +1,313 @@
+<html>
+<script type="text/javascript" src="moment.js"></script>
+<script>
+var dates = [new Date("2015-09-03 12:18:00"), new Date("2015-08-30 20:56:00"), new Date("2015-08-28 11:04:00"), new Date("2015-08-27 16:31:00"), new Date("2015-08-27 10:30:00"), new Date("2015-08-26 5:23:00"), new Date("2015-08-25 17:51:00"), new Date("2015-08-23 2:40:00"), new Date("2015-08-19 9:39:00"), new Date("2015-08-18 13:35:00"), new Date("2015-08-17 18:57:00"), new Date("2015-08-15 03:56:00"), new Date("2015-08-15 11:36:00"), new Date("2015-08-08 10:25:00"), new Date("2015-08-06 9:30:00"), new Date("2015-08-04 12:06:00"), new Date("2015-07-29 15:19:00"), new Date("2015-07-27 22:26:00"), new Date("2015-07-26 9:11:00"), new Date("2015-07-25 15:33:00"), new Date("2015-07-22 22:14:00"), new Date("2015-07-21 1:15:00"), new Date("2015-07-20 3:43:00"), new Date("2015-07-19 20:51:00"), new Date("2015-07-15 11:52:00"), new Date("2015-07-13 0:13:00"), new Date("2015-07-10 1:25:00"), new Date("2015-07-07 18:54:00"), new Date("2015-07-04 9:10:00"), new Date("2015-07-03 20:12:00"), new Date("2015-06-29 3:45:00"), new Date("2015-06-27 14:45:00"), new Date("2015-06-22 19:55:00"), new Date("2015-06-19 18:01:00"), new Date("2015-06-17 15:58:00"), new Date("2015-06-09 12:40:00"), new Date("2015-06-05 17:31:00"), new Date("2015-06-02 15:07:00"), new Date("2015-06-02 10:39:00"), new Date("2015-05-30 4:26:00"), new Date("2015-05-29 14:24:00"), new Date("2015-05-27 20:48:00"), new Date("2015-05-26 19:49:00"), new Date("2015-05-24 15:59:00"), new Date("2015-05-23 0:48:00"), new Date("2015-05-22 13:22:00"), new Date("2015-05-21 7:11:00"), new Date("2015-05-20 20:31:00"), new Date("2015-05-19 21:04:00"), new Date("2015-05-18 0:41:00"), new Date("2015-05-16 7:02:00"), new Date("2015-05-11 3:47:00"), new Date("2015-05-10 16:45:00"), new Date("2015-05-08 20:04:00"), new Date("2015-05-07 16:34:00"), new Date("2015-05-05 9:19:00"), new Date("2015-05-05 13:25:00"), new Date("2015-05-02 12:49:00"), new Date("2015-04-23 12:58:00"), new Date("2015-04-15 23:12:00"), new Date("2015-04-13 0:04:00"), new Date("2015-04-11 6:50:00"), new Date("2015-04-08 19:31:00"), new Date("2015-04-07 2:34:00"), new Date("2015-04-07 0:04:00"), new Date("2015-04-01 9:55:00"), new Date("2015-03-30 11:43:00"), new Date("2015-03-25 10:11:00"), new Date("2015-03-24 21:44:00"), new Date("2015-03-21 2:31:00"), new Date("2015-03-21 23:31:00"), new Date("2015-03-19 2:23:00"), new Date("2015-03-13 13:15:00"), new Date("2015-03-10 3:16:00"), new Date("2015-03-09 10:29:00"), new Date("2015-03-08 23:57:00"), new Date("2015-03-07 23:25:00"), new Date("2015-03-04 18:17:00"), new Date("2015-03-03 18:22:00"), new Date("2015-02-28 6:18:00"), new Date("2015-02-20 10:32:00"), new Date("2015-02-18 15:23:00"), new Date("2015-02-17 10:13:00"), new Date("2015-02-10 11:06:00"), new Date("2015-02-10 0:38:00"), new Date("2015-02-08 23:21:00"), new Date("2015-02-08 18:58:00"), new Date("2015-02-07 6:40:00"), new Date("2015-02-03 14:08:00"), new Date("2015-02-01 4:41:00"), new Date("2015-01-28 18:41:00"), new Date("2015-01-22 14:23:00"), new Date("2015-01-21 2:56:00"), new Date("2015-01-17 2:33:00"), new Date("2015-01-17 13:56:00"), new Date("2015-01-16 12:26:00"), new Date("2015-01-11 17:13:00"), new Date("2015-01-09 22:35:00"), new Date("2015-01-07 8:26:00"), new Date("2015-01-06 5:07:00"), new Date("2015-01-06 11:19:00")];
+	
+function resizeCanvas(width, height) {
+	var newWidth = width || document.getElementById('canvas').width,
+		newHeight = height || document.getElementById('canvas').height;
+		
+	document.getElementById('canvas').width = newWidth;
+	document.getElementById('canvas').height = newHeight;
+	
+	draw();
+}
+	
+function draw() {
+	stats("#EA881B");
+	//timeOfDay("#9D47C7");
+	//dayOfWeek("#45C137");
+}
+
+function stats(color) {
+	var ctx = document.getElementById("canvas").getContext("2d"),
+		canvasWidth = document.getElementById('canvas').width,
+		canvasHeight = document.getElementById('canvas').height;
+		
+	//calculate time since last record
+	var time = determineTime(new Date(), dates[0]),
+		recentTime = time.value,
+		recentTimeLabel = time.label;
+	
+	
+	
+	//draw time since last record
+	var middle = 100,
+		leftLeftPadding = 35;
+	ctx.font = "80px Arial";
+	ctx.fillStyle = color;
+	ctx.fillText(recentTime, leftLeftPadding, middle);
+	ctx.font = "12px Arial";
+	ctx.fillStyle = "#000000";
+	ctx.fillText(recentTimeLabel + " since", leftLeftPadding, middle + 25);
+	ctx.fillText("last time", leftLeftPadding, middle + 44);
+	
+	//draw divider line
+	var verticalPadding = 10;
+	ctx.fillStyle = "#aaaaaa";
+	ctx.fillRect(canvasWidth/2, verticalPadding, 1, canvasHeight - (verticalPadding * 2)); 
+	
+	
+	//calculate max time between
+	var maxTimeMillis = 0,
+		maxTime = 0,
+		maxTimeLabel = "",
+		rightLeftPadding = 20;
+	
+	if (dates.length === 1) {
+		maxTime = recentTime;
+		maxTimeLabel = recentTimeLabel;
+	} else {
+		//set defaults
+		time = determineTime(new Date(), dates[0]);
+		maxTimeMillis = Math.abs(moment() - moment(dates[0]));
+		maxTime = time.value;
+		maxTimeLabel = time.label;
+		
+		//calculate max
+		for (var i=1; i<dates.length; i++) {
+			if (Math.abs(dates[i-1] - dates[i]) > maxTimeMillis) {
+				maxTimeMillis = Math.abs(dates[i-1] - dates[i]);
+				
+				time = determineTime(dates[i-1], dates[i]);
+				maxTime = time.value;
+				maxTimeLabel = time.label;
+			}
+		}
+	}
+	
+	//draw max
+	ctx.font = "20px Arial";
+	ctx.fillStyle = color;
+	ctx.globalAlpha = .8;
+	ctx.fillText(maxTime + " " + maxTimeLabel, (canvasWidth/2) + rightLeftPadding, canvasHeight/4);
+	ctx.font = "11px Arial";
+	ctx.fillStyle = "#000000";
+	ctx.globalAlpha = 1;
+	ctx.fillText("maximum time between", (canvasWidth/2) + rightLeftPadding, (canvasHeight/4) + 15);
+	
+	
+	//calculate avg time between
+	var avgTimeMillis = -1,
+		avgTime = 0,
+		avgTimeLabel = "";
+		
+	if (dates.length === 1) {
+		avgTime = recentTime;
+		avgTimeLabel = recentTimeLabel;
+	} else {
+		//calculate average
+		var total = 0;
+		for (var i=1; i<dates.length; i++) {
+			total += Math.abs(dates[i-1] - dates[i])
+		}
+		
+		var average = Math.round(total / dates.length);
+		
+		if (Math.round(moment.duration(average).asYears()) > 0) {
+			avgTime = Math.round(moment.duration(average).asYears());
+			avgTimeLabel = "year" + (moment.duration(average).asYears() > 1 ? "s" : "")
+		} else if (Math.round(moment.duration(average).asMonths()) > 0) {
+			avgTime = Math.round(moment.duration(average).asMonths());
+			avgTimeLabel = "month" + (moment.duration(average).asMonths() > 1 ? "s" : "")
+		} else if (Math.round(moment.duration(average).asDays()) > 0) {
+			avgTime = Math.round(moment.duration(average).asDays());
+			avgTimeLabel = "day" + (moment.duration(average).asDays() > 1 ? "s" : "")
+		} else if (Math.round(moment.duration(average).asHours()) > 0) {
+			avgTime = Math.round(moment.duration(average).asHours());
+			avgTimeLabel = "hour" + (moment.duration(average).asHours() > 1 ? "s" : "")
+		}
+	}
+	
+	//draw average
+	ctx.font = "20px Arial";
+	ctx.fillStyle = color;
+	ctx.globalAlpha = .8;
+	ctx.fillText(avgTime + " " + avgTimeLabel, (canvasWidth/2) + rightLeftPadding, (canvasHeight/4)*2);
+	ctx.font = "11px Arial";
+	ctx.fillStyle = "#000000";
+	ctx.globalAlpha = 1;
+	ctx.fillText("average time between", (canvasWidth/2) + rightLeftPadding, ((canvasHeight/4)*2) + 15);
+	
+	
+	//calculate min time between
+	var minTimeMillis = -1,
+		minTime = 0,
+		minTimeLabel = "";
+	
+		
+	if (dates.length === 1) {
+		minTime = recentTime;
+		minTimeLabel = recentTimeLabel;
+	} else {
+		//set defaults
+		time = determineTime(new Date(), dates[0]);
+		minTimeMillis = Math.abs(moment() - moment(dates[0]));
+		minTime = time.value;
+		minTimeLabel = time.label;
+		
+		//calculate min
+		for (var i=1; i<dates.length; i++) {
+			if (Math.abs(dates[i-1] - dates[i]) < minTimeMillis || minTimeMillis == -1) {
+				minTimeMillis = Math.abs(dates[i-1] - dates[i]);
+				
+				time = determineTime(dates[i-1], dates[i]);
+				minTime = time.value;
+				minTimeLabel = time.label;
+			}
+		}
+	}
+	
+	//draw min
+	ctx.font = "20px Arial";
+	ctx.fillStyle = color;
+	ctx.globalAlpha = .8;
+	ctx.fillText(minTime + " " + minTimeLabel, (canvasWidth/2) + rightLeftPadding, (canvasHeight/4)*3);
+	ctx.font = "11px Arial";
+	ctx.fillStyle = "#000000";
+	ctx.globalAlpha = 1;
+	ctx.fillText("minimum time between", (canvasWidth/2) + rightLeftPadding, ((canvasHeight/4)*3) + 15);
+}
+
+function determineTime(newerDate, olderDate) {
+	var time = {
+		value: 0,
+		label: ""
+	};
+	var newerDateMoment = moment(newerDate),
+		olderDateMoment = moment(olderDate);
+	
+	if (Math.abs(newerDateMoment.diff(olderDateMoment, 'years')) > 0) {
+		time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'years'));
+		time.label = 'year' + (time.value > 1 ? "s" : "");
+	}  else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'months')) > 0) {
+		time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'months'));
+		time.label = 'month' + (time.value > 1 ? "s" : "");
+	} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'days')) > 0) {
+		time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'days'));
+		time.label = 'day' + (time.value > 1 ? "s" : "");
+	} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'hours')) > 0) {
+		time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'hours'));
+		time.label = 'hour' + (time.value > 1 ? "s" : "");
+	} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes')) > 0) {
+		time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes'));
+		time.label = 'minute' + (time.value > 1 ? "s" : "");
+	}
+	
+	return time;
+}
+
+function timeOfDay(color) {
+	var ctx = document.getElementById("canvas").getContext("2d"),
+		timeOfDay = [0,0,0,0],
+		total = 0,
+		lastAngle = 2 * Math.PI * .25 * -1, //start with a vertical line
+		offsetLeft = 0,
+		canvasWidth = document.getElementById('canvas').width,
+		canvasHeight = document.getElementById('canvas').height;
+		
+	//count up the number of times each time of day is present
+	for (var i=0; i<dates.length; i++) {
+		var hour = dates[i].getHours();
+		
+		if (hour >= 5 && hour < 12) {
+			//morning - 5:00am to 11:59am
+			timeOfDay[0]++;
+		} else if (hour >= 12 && hour < 17) {
+			//afternoon - noon to 4:59pm
+			timeOfDay[1]++;
+		} else if (hour >= 17 && hour <= 23) {
+			//evening - 5:00pm to 11:59pm
+			timeOfDay[2]++;
+		} else if (hour >= 0 && hour < 5) {
+			//night - midnight to 4:59am
+			timeOfDay[3]++;
+		}
+	}
+	
+	//add up the total number of entries
+	for (var i=0; i<timeOfDay.length; i++) {
+		total += timeOfDay[i];
+	}
+	
+	ctx.globalAlpha = 1;
+	var offsetTop = canvasHeight/6;
+	var timeTexts = ['Morning', 'Afternoon', 'Evening', 'Night'];
+	for (var i=0; i<timeOfDay.length; i++) {
+		//draw pie chart sections
+		ctx.fillStyle = color;
+		ctx.globalAlpha = (.25 * i * 1) + .25;
+		ctx.beginPath();
+		ctx.moveTo(canvasHeight/2 - offsetLeft, canvasHeight/2);	//draw a line from the center to the start of the arc
+		ctx.arc(canvasHeight/2 - offsetLeft, canvasHeight/2, canvasHeight/2 - offsetLeft, lastAngle, ((timeOfDay[i] / total) * 2 * Math.PI) + lastAngle, false);	//draw arc
+		ctx.closePath();	//draw line from end or arc back to center of circle
+		ctx.fill();
+		
+		lastAngle += (timeOfDay[i] / total) * 2 * Math.PI;
+		
+		//draw legend markers
+		var width = 6,
+			height = 25;
+		ctx.fillRect(canvasHeight - offsetLeft + (canvasHeight/8), (canvasHeight/12) * ((2* i)+1) + offsetTop - (height/2), width, height);
+		
+		//draw legend text
+		ctx.font = "11px Arial";
+		ctx.globalAlpha = 1;
+		ctx.fillStyle = "#000000";
+		ctx.fillText(timeTexts[i], (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 9);
+		ctx.fillText(Math.round((timeOfDay[i]/total) * 100) + "%", (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 23);
+	}
+	ctx.globalAlpha = 1;
+}	
+
+function dayOfWeek(color) {
+	var ctx = document.getElementById("canvas").getContext("2d"),
+		dayOfWeek = [0,0,0,0,0,0,0],
+		maxDay = 0,
+		canvasWidth = document.getElementById('canvas').width,
+		canvasHeight = document.getElementById('canvas').height;
+	
+	//count up the number of times each day of the week is present
+	for (var i=0; i<dates.length; i++) {
+		dayOfWeek[dates[i].getDay()]++;
+	}
+	
+	//determine which day of the week has the most entries
+	for (var i=1; i<dayOfWeek.length; i++) {
+		if (dayOfWeek[i] > dayOfWeek[maxDay]) {
+			maxDay = i;
+		}
+	}
+	
+	//draw day labels
+	ctx.font = "11px Arial";
+	ctx.fillStyle = "#000000";
+	ctx.fillText("S",((canvasWidth)/14)*1 - 4,canvasHeight - 5);
+	ctx.fillText("M",((canvasWidth)/14)*3 - 4,canvasHeight - 5);
+	ctx.fillText("T",((canvasWidth)/14)*5 - 4,canvasHeight - 5);
+	ctx.fillText("W",((canvasWidth)/14)*7 - 4,canvasHeight - 5);
+	ctx.fillText("T",((canvasWidth)/14)*9 - 4,canvasHeight - 5);
+	ctx.fillText("F",((canvasWidth)/14)*11 - 4,canvasHeight - 5);
+	ctx.fillText("S",((canvasWidth)/14)*13 - 4,canvasHeight - 5);
+	
+	//draw graph bars
+	ctx.fillStyle = color;
+	for (var i=0; i<dayOfWeek.length; i++) {
+		ctx.fillRect(((canvasWidth)/7)*i + 1, //bar is 1/7 the width of the canvas, i determines which bar, 1 gives side margin
+		canvasHeight - (dayOfWeek[i]/dayOfWeek[maxDay]) * canvasHeight - 20,	//canvasHeight used since coordinates start at top, whatever percentage current day is of max day determines percentage of canvas height, 20 gives space for lettering at bottom
+		((canvasWidth)/7)*1 - 2, 	//width is 1/7 the width of the canvas, 2 gives side margins
+		(dayOfWeek[i]/dayOfWeek[maxDay]) * canvasHeight);
+	}
+	
+	//draw percent labels
+	ctx.fillStyle = "#ffffff";
+	for (var i=0; i<dayOfWeek.length; i++) {
+		ctx.fillText(Math.round((dayOfWeek[i]/dates.length)*100) + "%",((canvasWidth)/14)*((2*i)+1) - 8,canvasHeight - 27);
+	}
+}
+
+</script>
+<body onload="draw()">
+<canvas id="canvas" width="300" height="200" style="border: 1px solid #aaa"></canvas> 
+</body>
+</html>
