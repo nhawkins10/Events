@@ -18,14 +18,26 @@
 </div>
 <div id="add" onclick="javascript:Events.event.addEvent()">+</div>
 <div class="spinner" id="spinner"></div>
-<ul id="eventList">
-</ul>
+<div class='canvasContainer'>
+		<canvas name='stats' id='canvas1' width='300' height='200'></canvas>
+		<canvas class='hidden' name='time' id='canvas2' width='300' height='200'></canvas>
+		<canvas class='hidden' name='day' id='canvas3' width='300' height='200'></canvas>
+		<div class='canvasButtons'>
+			<div class='canvasButton backCanvasButton' onclick='javascript:Events.draw.prevCanvas()'>Back</div>
+			<div class='canvasButton nextCanvasButton' onclick='javascript:Events.draw.nextCanvas()'>Next</div>
+		</div>
+</div>
+<div class='listContainer'>
+	<ul id="eventList">
+	</ul>
+</div>
 <div class='footerBar'>
 	<div class='logoutFooter toggle' onclick='javascript:Events.authentication.logout()'>Sign out</div>
 	<div class='logoutFooter' onclick='javascript:Events.category.removeCategory()'>Delete category</div>
 </div>
 
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script type="text/javascript" src="../moment.js"></script>
 <script src="../events.js"></script>
 <script>
 	//check if user is authenticated before page finishes loading

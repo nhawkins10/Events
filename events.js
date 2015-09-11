@@ -24,28 +24,37 @@ var Events = (function() {
 	};
 	
 	function translateColor(colorId) {
-		var color = '';
+		var color = {
+			name: '',
+			hex: ''
+		};
 		switch (colorId) {
 			case "1":
-				color = "red";
+				color.name = "red";
+				color.hex = "#D92C2C";
 				break;
 			case "2":
-				color = "orange";
+				color.name = "orange";
+				color.hex = "#EA881B";
 				break;
 			case "3":
-				color = "yellow";
+				color.name = "yellow";
+				color.hex = "#F0D911";
 				break;
 			case "4":
-				color = "green";
+				color.name = "green";
+				color.hex = "#45C137";
 				break;
 			case "5":
-				color = "blue";
+				color.name = "blue";
+				color.hex = "#3693AE";
 				break;
 			case "6":
-				color = "purple";
+				color.name = "purple";
+				color.hex = "#9D47C7";
 				break;
 			default:
-				color = "blue";
+				color.name = "blue";
 		}
 		return color;
 	};
@@ -158,7 +167,7 @@ var Events = (function() {
 							localStorage.events = JSON.stringify({token: userData.token, uid: userData.uid});
 							
 							//redirect to main category view
-							location.href = "../home"
+							Events.navigate.toHome();
 						}
 					});
 				}
@@ -166,7 +175,7 @@ var Events = (function() {
 			
 			logout: function() {
 				dataRef.unauth();
-				location.href = "../login";
+				Events.navigate.toLogin();
 			},
 			
 			toggleCreateUser: function() {
@@ -276,7 +285,7 @@ var Events = (function() {
 			displayCategory: function(name, color, key) {
 				var categoryList = document.getElementById("categoryList");
 				categoryList.innerHTML = categoryList.innerHTML + 
-					"<li class='categoryItem " + translateColor(color) + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
+					"<li class='categoryItem " + translateColor(color).name + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
 			},
 			
 			/**
@@ -313,7 +322,7 @@ var Events = (function() {
 					dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
 					
 					//return to the list of categories
-					location.href = "../home";
+					Events.navigate.toHome();
 				}
 			},
 			
@@ -356,10 +365,19 @@ var Events = (function() {
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
 					var name = snapshot.val();
 					document.getElementById("eventHeader").innerHTML = name.name;
+					
+					//set the color of the elements
 					var elements = document.getElementById('eventList').children;
 					for (var i=0; i<elements.length; i++) {
-						elements[i].className += " " + translateColor(name.color);
+						elements[i].className += " " + translateColor(name.color).name;
 					}
+					
+					//make a call to draw the graphics
+					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").once("value", function(data) {
+						Events.draw.stats(translateColor(name.color).hex);
+						Events.draw.timeOfDay(translateColor(name.color).hex);
+						Events.draw.dayOfWeek(translateColor(name.color).hex);
+					});
 				});
 				
 				//display all events(timestamps) associated with the given category
@@ -369,7 +387,12 @@ var Events = (function() {
 					document.getElementById('spinner').className = "";
 					
 					//create HTML for event
-					Events.event.displayEntry(temp.time, self.color);
+					Events.event.displayEntry(temp.time);
+					
+					//add date to list for graphics
+					var arr = temp.time.split(/[- :]/),
+						date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]);
+					Events.draw.dates.push(date);
 				});
 			},
 			
@@ -378,7 +401,6 @@ var Events = (function() {
 			 * 	@param timestamp - the time of the event
 			 */
 			displayEntry: function(timestamp, color) {
-				console.log(color);
 				var entryList = document.getElementById("eventList");
 				entryList.innerHTML = "<li class='eventItem'>" + formatDate(timestamp) + "</li>" + entryList.innerHTML;
 			},
@@ -392,11 +414,11 @@ var Events = (function() {
 				
 				//currently viewing specific category
 				if (key) {
-					location.href = "../add?q=" + key;
+					Events.navigate.toAdd(key);
 				
 				//viewing all categories
 				} else {
-					location.href = "../add";
+					Events.navigate.toAdd();
 				}
 			},
 			
@@ -449,9 +471,9 @@ var Events = (function() {
 				});
 				
 				if (key) {
-					location.href = "../detail?q=" + key;
+					Events.navigate.toDetail(key);
 				} else {
-					location.href = "../home";
+					Events.navigate.toHome();
 				}
 			},
 			
@@ -464,9 +486,9 @@ var Events = (function() {
 				var key = location.search ? location.search.substring(3, location.search.length) : "";
 				
 				if (key) {
-					location.href = "../detail?q=" + key;
+					Events.navigate.toDetail(key);
 				} else {
-					location.href = "../home";
+					Events.navigate.toHome();
 				}
 			}
 		},
@@ -482,7 +504,22 @@ var Events = (function() {
 			 *	@param key - the category key to display details for
 			 */
 			toDetail: function(key) {
-				location.href = "../detail?q=" + key;
+				location.href = "../detail/?q=" + key;
+			},
+			
+			/**
+			 *	This function navigates to the add page. If
+			 *	key is provided it is passed to the add page
+			 *	as a query parameter, otherwise the default
+			 *	add page is loaded.
+			 *	@param { key | null } - the key to add to, or null for default
+			 */
+			toAdd: function(key) {
+				if (key) {
+					location.href = "../add/?q=" + key;
+				} else {
+					location.href = "../add/";
+				}
 			},
 			
 			/**
@@ -491,7 +528,15 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toHome: function() {
-				location.href = "../home";
+				location.href = "../home/";
+			},
+			
+			/**
+			 *	This function navigates to the login page.
+			 *	@param - none
+			 */
+			toLogin: function() {
+				location.href = "../login/";
 			}
 		},
 		
@@ -504,6 +549,31 @@ var Events = (function() {
 		draw: {
 			dates: [],
 			
+			currentCanvas: 1,
+			canvasCount: 3,
+			
+			nextCanvas: function() {
+				document.getElementById('canvas' + this.currentCanvas).className = "hidden";
+				if (this.currentCanvas == this.canvasCount) {
+					this.currentCanvas = 1;
+				} else {
+					this.currentCanvas++;
+				}
+				
+				document.getElementById('canvas' + this.currentCanvas).className = "";
+			},
+			
+			prevCanvas: function() {
+				document.getElementById('canvas' + this.currentCanvas).className = "hidden";
+				if (this.currentCanvas == 1) {
+					this.currentCanvas = this.canvasCount;
+				} else {
+					this.currentCanvas--;
+				}
+				
+				document.getElementById('canvas' + this.currentCanvas).className = "";
+			},
+			
 			/**
 			 *	This function populates the canvas with the stats data. It calculates
 			 * 	the time since the last event, the maximum time between events, the 
@@ -512,9 +582,10 @@ var Events = (function() {
 			 *	@param color - the color to use on the canvas
 			 */
 			stats: function(color) {
-				var ctx = document.getElementById("statsCanvas").getContext("2d"),
-					canvasWidth = document.getElementById('statsCanvas').width,
-					canvasHeight = document.getElementById('statsCanvas').height;
+				var ctx = document.getElementById("canvas1").getContext("2d"),
+					canvasWidth = document.getElementById('canvas1').width,
+					canvasHeight = document.getElementById('canvas1').height,
+					dates = this.dates.reverse();
 					
 				//calculate time since last record
 				var time = determineTime(new Date(), dates[0]),
@@ -661,7 +732,131 @@ var Events = (function() {
 				ctx.fillText("minimum time between", (canvasWidth/2) + rightLeftPadding, ((canvasHeight/4)*3) + 15);
 			},
 			
+			/**
+			 *	This function populates the canvas with the time of day data. It 
+			 * 	calculates the percentages of dates that fall into each time of
+			 *	day. Morning is from 5am to 11:59pm, afternoon is from noon to 4:59pm,
+			 *	evening is from 5pm to 11:59pm, night is from 12am to 4:59am. It
+			 * 	then draws a pie chart on the canvas to represent the calculations.
+			 *	@param color - the color to use on the canvas
+			 */
+			timeOfDay: function(color) {
+				var ctx = document.getElementById("canvas2").getContext("2d"),
+					timeOfDay = [0,0,0,0],
+					total = 0,
+					lastAngle = 2 * Math.PI * .25 * -1, //start with a vertical line
+					offsetLeft = 0,
+					canvasWidth = document.getElementById('canvas2').width,
+					canvasHeight = document.getElementById('canvas2').height,
+					dates = this.dates.reverse();
+					
+				//count up the number of times each time of day is present
+				for (var i=0; i<dates.length; i++) {
+					var hour = dates[i].getHours();
+					
+					if (hour >= 5 && hour < 12) {
+						//morning - 5:00am to 11:59am
+						timeOfDay[0]++;
+					} else if (hour >= 12 && hour < 17) {
+						//afternoon - noon to 4:59pm
+						timeOfDay[1]++;
+					} else if (hour >= 17 && hour <= 23) {
+						//evening - 5:00pm to 11:59pm
+						timeOfDay[2]++;
+					} else if (hour >= 0 && hour < 5) {
+						//night - midnight to 4:59am
+						timeOfDay[3]++;
+					}
+				}
+				
+				//add up the total number of entries
+				for (var i=0; i<timeOfDay.length; i++) {
+					total += timeOfDay[i];
+				}
+				
+				ctx.globalAlpha = 1;
+				var offsetTop = canvasHeight/6;
+				var timeTexts = ['Morning', 'Afternoon', 'Evening', 'Night'];
+				for (var i=0; i<timeOfDay.length; i++) {
+					//draw pie chart sections
+					ctx.fillStyle = color;
+					ctx.globalAlpha = (.25 * i * 1) + .25;
+					ctx.beginPath();
+					ctx.moveTo(canvasHeight/2 - offsetLeft, canvasHeight/2);	//draw a line from the center to the start of the arc
+					ctx.arc(canvasHeight/2 - offsetLeft, canvasHeight/2, canvasHeight/2 - offsetLeft, lastAngle, ((timeOfDay[i] / total) * 2 * Math.PI) + lastAngle, false);	//draw arc
+					ctx.closePath();	//draw line from end or arc back to center of circle
+					ctx.fill();
+					
+					lastAngle += (timeOfDay[i] / total) * 2 * Math.PI;
+					
+					//draw legend markers
+					var width = 6,
+						height = 25;
+					ctx.fillRect(canvasHeight - offsetLeft + (canvasHeight/8), (canvasHeight/12) * ((2* i)+1) + offsetTop - (height/2), width, height);
+					
+					//draw legend text
+					ctx.font = "11px Arial";
+					ctx.globalAlpha = 1;
+					ctx.fillStyle = "#000000";
+					ctx.fillText(timeTexts[i], (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 9);
+					ctx.fillText(Math.round((timeOfDay[i]/total) * 100) + "%", (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 23);
+				}
+				ctx.globalAlpha = 1;
+			},
 			
+			/**
+			 *	This function populates the canvas with the day of week data. It 
+			 * 	calculates the percentages of dates that fall on each day of the 
+			 *	week. It then draws a bar graph on the canvas to represent the 
+			 * 	calculations.
+			 *	@param color - the color to use on the canvas
+			 */
+			dayOfWeek: function(color) {
+				var ctx = document.getElementById("canvas3").getContext("2d"),
+					dayOfWeek = [0,0,0,0,0,0,0],
+					maxDay = 0,
+					canvasWidth = document.getElementById('canvas3').width,
+					canvasHeight = document.getElementById('canvas3').height,
+					dates = this.dates.reverse();
+				
+				//count up the number of times each day of the week is present
+				for (var i=0; i<dates.length; i++) {
+					dayOfWeek[dates[i].getDay()]++;
+				}
+				
+				//determine which day of the week has the most entries
+				for (var i=1; i<dayOfWeek.length; i++) {
+					if (dayOfWeek[i] > dayOfWeek[maxDay]) {
+						maxDay = i;
+					}
+				}
+				
+				//draw day labels
+				ctx.font = "11px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText("S",((canvasWidth)/14)*1 - 4,canvasHeight - 5);
+				ctx.fillText("M",((canvasWidth)/14)*3 - 4,canvasHeight - 5);
+				ctx.fillText("T",((canvasWidth)/14)*5 - 4,canvasHeight - 5);
+				ctx.fillText("W",((canvasWidth)/14)*7 - 4,canvasHeight - 5);
+				ctx.fillText("T",((canvasWidth)/14)*9 - 4,canvasHeight - 5);
+				ctx.fillText("F",((canvasWidth)/14)*11 - 4,canvasHeight - 5);
+				ctx.fillText("S",((canvasWidth)/14)*13 - 4,canvasHeight - 5);
+				
+				//draw graph bars
+				ctx.fillStyle = color;
+				for (var i=0; i<dayOfWeek.length; i++) {
+					ctx.fillRect(((canvasWidth)/7)*i + 1, //bar is 1/7 the width of the canvas, i determines which bar, 1 gives side margin
+					canvasHeight - (dayOfWeek[i]/dayOfWeek[maxDay]) * canvasHeight - 20,	//canvasHeight used since coordinates start at top, whatever percentage current day is of max day determines percentage of canvas height, 20 gives space for lettering at bottom
+					((canvasWidth)/7)*1 - 2, 	//width is 1/7 the width of the canvas, 2 gives side margins
+					(dayOfWeek[i]/dayOfWeek[maxDay]) * canvasHeight);
+				}
+				
+				//draw percent labels
+				ctx.fillStyle = "#ffffff";
+				for (var i=0; i<dayOfWeek.length; i++) {
+					ctx.fillText(Math.round((dayOfWeek[i]/dates.length)*100) + "%",((canvasWidth)/14)*((2*i)+1) - 8,canvasHeight - 27);
+				}
+			}
 		}
 	};
 })();

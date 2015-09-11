@@ -26,15 +26,15 @@ a {
 }
 
 .green {
-	background-color: #45C137
+	background-color: #45C137;
 }
 
 .blue {
-	background-color: #3693AE
+	background-color: #3693AE;
 }
 
 .purple {
-	background-color: #9D47C7
+	background-color: #9D47C7;
 }
 
 .headerBar {
@@ -101,8 +101,8 @@ a {
 
 .logoutFooter {
 	font-size: .8em;
-    line-height: 3.8em;
-    height: 3.7em;
+    line-height: 50px;
+    height: 50px;
     margin-left: 15px;
     position: relative;
 	cursor: pointer;
