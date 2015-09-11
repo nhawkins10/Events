@@ -88,6 +88,34 @@ var Events = (function() {
 		}
 		
 		return false;
+	};
+	
+	function determineTime(newerDate, olderDate) {
+		var time = {
+			value: 0,
+			label: ""
+		};
+		var newerDateMoment = moment(newerDate),
+			olderDateMoment = moment(olderDate);
+		
+		if (Math.abs(newerDateMoment.diff(olderDateMoment, 'years')) > 0) {
+			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'years'));
+			time.label = 'year' + (time.value > 1 ? "s" : "");
+		}  else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'months')) > 0) {
+			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'months'));
+			time.label = 'month' + (time.value > 1 ? "s" : "");
+		} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'days')) > 0) {
+			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'days'));
+			time.label = 'day' + (time.value > 1 ? "s" : "");
+		} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'hours')) > 0) {
+			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'hours'));
+			time.label = 'hour' + (time.value > 1 ? "s" : "");
+		} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes')) > 0) {
+			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes'));
+			time.label = 'minute' + (time.value > 1 ? "s" : "");
+		}
+		
+		return time;
 	}
 	
 	return {
@@ -443,14 +471,197 @@ var Events = (function() {
 			}
 		},
 		
+		/**
+		 *	The navigate module exposes functions related to moving
+		 * 	between the different pages within the app.
+		 */
 		navigate: {
+			/**
+			 *	This function navigates to the detail page and
+			 *	displays data for the given key.
+			 *	@param key - the category key to display details for
+			 */
 			toDetail: function(key) {
 				location.href = "../detail?q=" + key;
 			},
 			
+			/**
+			 *	This function navigates to the home page where
+			 *	a list of all categories is displayed.
+			 *	@param - none
+			 */
 			toHome: function() {
 				location.href = "../home";
 			}
+		},
+		
+		/**
+		 *	The draw module exposes functions related to displaying
+		 *	data is visual form on canvases. It uses the events for
+		 *	a specific category, calculates various data points, and
+		 *	displays that data in various graphics.
+		 */
+		draw: {
+			dates: [],
+			
+			/**
+			 *	This function populates the canvas with the stats data. It calculates
+			 * 	the time since the last event, the maximum time between events, the 
+			 *	average time between events, and the minimum time between events. It
+			 * 	then draws graphs and data on canvases to represent the calculations.
+			 *	@param color - the color to use on the canvas
+			 */
+			stats: function(color) {
+				var ctx = document.getElementById("statsCanvas").getContext("2d"),
+					canvasWidth = document.getElementById('statsCanvas').width,
+					canvasHeight = document.getElementById('statsCanvas').height;
+					
+				//calculate time since last record
+				var time = determineTime(new Date(), dates[0]),
+					recentTime = time.value,
+					recentTimeLabel = time.label;
+				
+				
+				
+				//draw time since last record
+				var middle = 100,
+					leftLeftPadding = 35;
+				ctx.font = "80px Arial";
+				ctx.fillStyle = color;
+				ctx.fillText(recentTime, leftLeftPadding, middle);
+				ctx.font = "12px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.fillText(recentTimeLabel + " since", leftLeftPadding, middle + 25);
+				ctx.fillText("last time", leftLeftPadding, middle + 44);
+				
+				//draw divider line
+				var verticalPadding = 10;
+				ctx.fillStyle = "#aaaaaa";
+				ctx.fillRect(canvasWidth/2, verticalPadding, 1, canvasHeight - (verticalPadding * 2)); 
+				
+				
+				//calculate max time between
+				var maxTimeMillis = 0,
+					maxTime = 0,
+					maxTimeLabel = "",
+					rightLeftPadding = 20;
+				
+				if (dates.length === 1) {
+					maxTime = recentTime;
+					maxTimeLabel = recentTimeLabel;
+				} else {
+					//set defaults
+					time = determineTime(new Date(), dates[0]);
+					maxTimeMillis = Math.abs(moment() - moment(dates[0]));
+					maxTime = time.value;
+					maxTimeLabel = time.label;
+					
+					//calculate max
+					for (var i=1; i<dates.length; i++) {
+						if (Math.abs(dates[i-1] - dates[i]) > maxTimeMillis) {
+							maxTimeMillis = Math.abs(dates[i-1] - dates[i]);
+							
+							time = determineTime(dates[i-1], dates[i]);
+							maxTime = time.value;
+							maxTimeLabel = time.label;
+						}
+					}
+				}
+				
+				//draw max
+				ctx.font = "20px Arial";
+				ctx.fillStyle = color;
+				ctx.globalAlpha = .8;
+				ctx.fillText(maxTime + " " + maxTimeLabel, (canvasWidth/2) + rightLeftPadding, canvasHeight/4);
+				ctx.font = "11px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.globalAlpha = 1;
+				ctx.fillText("maximum time between", (canvasWidth/2) + rightLeftPadding, (canvasHeight/4) + 15);
+				
+				
+				//calculate avg time between
+				var avgTimeMillis = -1,
+					avgTime = 0,
+					avgTimeLabel = "";
+					
+				if (dates.length === 1) {
+					avgTime = recentTime;
+					avgTimeLabel = recentTimeLabel;
+				} else {
+					//calculate average
+					var total = 0;
+					for (var i=1; i<dates.length; i++) {
+						total += Math.abs(dates[i-1] - dates[i])
+					}
+					
+					var average = Math.round(total / dates.length);
+					
+					if (Math.round(moment.duration(average).asYears()) > 0) {
+						avgTime = Math.round(moment.duration(average).asYears());
+						avgTimeLabel = "year" + (moment.duration(average).asYears() > 1 ? "s" : "")
+					} else if (Math.round(moment.duration(average).asMonths()) > 0) {
+						avgTime = Math.round(moment.duration(average).asMonths());
+						avgTimeLabel = "month" + (moment.duration(average).asMonths() > 1 ? "s" : "")
+					} else if (Math.round(moment.duration(average).asDays()) > 0) {
+						avgTime = Math.round(moment.duration(average).asDays());
+						avgTimeLabel = "day" + (moment.duration(average).asDays() > 1 ? "s" : "")
+					} else if (Math.round(moment.duration(average).asHours()) > 0) {
+						avgTime = Math.round(moment.duration(average).asHours());
+						avgTimeLabel = "hour" + (moment.duration(average).asHours() > 1 ? "s" : "")
+					}
+				}
+				
+				//draw average
+				ctx.font = "20px Arial";
+				ctx.fillStyle = color;
+				ctx.globalAlpha = .8;
+				ctx.fillText(avgTime + " " + avgTimeLabel, (canvasWidth/2) + rightLeftPadding, (canvasHeight/4)*2);
+				ctx.font = "11px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.globalAlpha = 1;
+				ctx.fillText("average time between", (canvasWidth/2) + rightLeftPadding, ((canvasHeight/4)*2) + 15);
+				
+				
+				//calculate min time between
+				var minTimeMillis = -1,
+					minTime = 0,
+					minTimeLabel = "";
+				
+					
+				if (dates.length === 1) {
+					minTime = recentTime;
+					minTimeLabel = recentTimeLabel;
+				} else {
+					//set defaults
+					time = determineTime(new Date(), dates[0]);
+					minTimeMillis = Math.abs(moment() - moment(dates[0]));
+					minTime = time.value;
+					minTimeLabel = time.label;
+					
+					//calculate min
+					for (var i=1; i<dates.length; i++) {
+						if (Math.abs(dates[i-1] - dates[i]) < minTimeMillis || minTimeMillis == -1) {
+							minTimeMillis = Math.abs(dates[i-1] - dates[i]);
+							
+							time = determineTime(dates[i-1], dates[i]);
+							minTime = time.value;
+							minTimeLabel = time.label;
+						}
+					}
+				}
+				
+				//draw min
+				ctx.font = "20px Arial";
+				ctx.fillStyle = color;
+				ctx.globalAlpha = .8;
+				ctx.fillText(minTime + " " + minTimeLabel, (canvasWidth/2) + rightLeftPadding, (canvasHeight/4)*3);
+				ctx.font = "11px Arial";
+				ctx.fillStyle = "#000000";
+				ctx.globalAlpha = 1;
+				ctx.fillText("minimum time between", (canvasWidth/2) + rightLeftPadding, ((canvasHeight/4)*3) + 15);
+			},
+			
+			
 		}
 	};
 })();
