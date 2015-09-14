@@ -510,7 +510,7 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toLogin: function() {
-				$("#pageContainer").load("pages/login.html");
+				$("#pageContainer").load("templates/login.html");
 			},
 			
 			/**
@@ -519,7 +519,7 @@ var Events = (function() {
 			 *	@param key - the category key to display details for
 			 */
 			toDetail: function(key) {
-				$("#pageContainer").load("pages/detail.html", function() {
+				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
 					});
@@ -535,7 +535,7 @@ var Events = (function() {
 			 *	@param { key | null } - the key to add to, or null for default
 			 */
 			toAdd: function(key) {
-				$("#pageContainer").load("pages/add.html", function() {
+				$("#pageContainer").load("templates/add.html", function() {
 					$(".cancelAddBtn").on("click", function() {
 						Events.event.cancelAdd(key);
 					});
@@ -553,7 +553,7 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toHome: function() {
-				$("#pageContainer").load("pages/home.html", function() {
+				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
 				});
 			}
