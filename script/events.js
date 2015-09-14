@@ -319,9 +319,8 @@ var Events = (function() {
 			 * 	This function deletes a category and all events
 			 * 	that are associated with it.
 			 */
-			removeCategory: function() {
+			removeCategory: function(key) {
 				var authTokens = JSON.parse(localStorage.events),
-					key = location.search.substring(3, location.search.length),
 					verifyDelete = confirm("Are you sure you want to delete this category and all it's data?");
 				
 				if (verifyDelete) {
@@ -522,6 +521,10 @@ var Events = (function() {
 				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
+					});
+					
+					$("#deleteBtn").on("click", function() {
+						Events.category.removeCategory(key);
 					});
 					Events.event.displayEvent(key);
 				});
