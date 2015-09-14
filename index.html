@@ -1,8 +1,35 @@
 <!DOCTYPE html>
 <html>
+<title>Events</title>
+<meta name="viewport" content="initial-scale=1, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<head>
+<link rel="stylesheet" type="text/css" href="css/login.css">
+<link rel="stylesheet" type="text/css" href="css/main.css">
+<link rel="stylesheet" type="text/css" href="css/home.css">
+<link rel="stylesheet" type="text/css" href="css/detail.css">
+<link rel="stylesheet" type="text/css" href="css/add.css">
+
+<link rel="icon" type="image/png" href="img/touch-icon-iphone.png">
+<link rel="apple-touch-icon" href="img/touch-icon-iphone.png">
+
+<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="script/jquery-min.js"></script>
+<script type="text/javascript" src="script/moment.js"></script>
+<script src="script/events.js"></script>
+</head>
 <body>
+<div id="pageContainer">
+	
+</div>
+
 <script>
-  location.href = "login";
+	//check if user is authenticated before page finishes loading
+	if (!Events.authentication.userAuthenticated()) {
+		Events.navigate.toLogin();
+	} else {
+		Events.navigate.toHome();
+	}
 </script>
 </body>
 </html>

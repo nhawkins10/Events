@@ -127,6 +127,13 @@ var Events = (function() {
 		return time;
 	}
 	
+	function removeCallbacks(key) {
+		var authTokens = JSON.parse(localStorage.events);
+		dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").off();
+		
+		Events.draw.dates = [];
+	}
+	
 	return {
 		/**
 		 *	The authentication module exposes functions related 
@@ -355,9 +362,8 @@ var Events = (function() {
 			 *	category key is included in the url as a query parameter.
 			 *	@param none
 			 */
-			displayEvent: function() {
-				var key = location.search.substring(3, location.search.length),
-					authTokens = JSON.parse(localStorage.events),
+			displayEvent: function(key) {
+				var authTokens = JSON.parse(localStorage.events),
 					color = '',
 					self = this;
 				
@@ -372,27 +378,31 @@ var Events = (function() {
 						elements[i].className += " " + translateColor(name.color).name;
 					}
 					
+					//display all events(timestamps) associated with the given category
+					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
+						var temp = snapshot.val();
+						//hide loading spinner
+						//if (document.getElementById('spinner')) {
+							document.getElementById('spinner').className = "";
+						//}
+						
+						//create HTML for event
+						//if (document.getElementById("eventList")) {
+							Events.event.displayEntry(temp.time, name.color);
+							
+							//add date to list for graphics
+							var arr = temp.time.split(/[- :]/),
+								date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]);
+							Events.draw.dates.push(date);
+						//}
+					});
+					
 					//make a call to draw the graphics
 					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").once("value", function(data) {
 						Events.draw.stats(translateColor(name.color).hex);
 						Events.draw.timeOfDay(translateColor(name.color).hex);
 						Events.draw.dayOfWeek(translateColor(name.color).hex);
 					});
-				});
-				
-				//display all events(timestamps) associated with the given category
-				dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
-					var temp = snapshot.val();
-					//hide loading spinner
-					document.getElementById('spinner').className = "";
-					
-					//create HTML for event
-					Events.event.displayEntry(temp.time);
-					
-					//add date to list for graphics
-					var arr = temp.time.split(/[- :]/),
-						date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]);
-					Events.draw.dates.push(date);
 				});
 			},
 			
@@ -402,17 +412,14 @@ var Events = (function() {
 			 */
 			displayEntry: function(timestamp, color) {
 				var entryList = document.getElementById("eventList");
-				entryList.innerHTML = "<li class='eventItem'>" + formatDate(timestamp) + "</li>" + entryList.innerHTML;
+				entryList.innerHTML = "<li class='eventItem " + translateColor(color).name + "'>" + formatDate(timestamp) + "</li>" + entryList.innerHTML;
 			},
 			
 			/**
 			 *	This function determines if the user is adding to a specific
 			 *	category and redirects to the correct add page
 			 */
-			addEvent: function() {
-				var key = location.search ? location.search.substring(3, location.search.length) : "";
-				
-				//currently viewing specific category
+			addEvent: function(key) {//currently viewing specific category
 				if (key) {
 					Events.navigate.toAdd(key);
 				
@@ -426,9 +433,8 @@ var Events = (function() {
 			 *	This function populates the data on the add event page.
 			 * @param none
 			 */
-			displayAdd: function() {
+			displayAdd: function(key) {
 				var authTokens = JSON.parse(localStorage.events),
-					key = location.search ? location.search.substring(3, location.search.length) : "",
 					dropDown = document.getElementById("categoryPicker");
 				
 				//set default date and time
@@ -448,12 +454,11 @@ var Events = (function() {
 			 *	This function saves the new event. It will also handle 
 			 *	creating a new category if necessary.
 			 */
-			saveAdd: function() {
+			saveAdd: function(key) {
 				var date = document.getElementById("eventDate").value,
 					time = document.getElementById("eventTime").value,
 					authTokens = JSON.parse(localStorage.events),
-					categoryKey = "",
-					key = location.search ? location.search.substring(3, location.search.length) : "";
+					categoryKey = "";
 					
 				//determine the category
 				if ($("#categoryPicker").hasClass("hidden")) {
@@ -464,6 +469,8 @@ var Events = (function() {
 				} else {
 					categoryKey = document.getElementById("categoryPicker").value
 				}
+				
+				removeCallbacks(categoryKey);
 				
 				//send the new value to the database
 				dataRef.child("users").child(authTokens.uid).child("categories").child(categoryKey).child("events").push({
@@ -499,12 +506,25 @@ var Events = (function() {
 		 */
 		navigate: {
 			/**
+			 *	This function navigates to the login page.
+			 *	@param - none
+			 */
+			toLogin: function() {
+				$("#pageContainer").load("pages/login.html");
+			},
+			
+			/**
 			 *	This function navigates to the detail page and
 			 *	displays data for the given key.
 			 *	@param key - the category key to display details for
 			 */
 			toDetail: function(key) {
-				location.href = "../detail/?q=" + key;
+				$("#pageContainer").load("pages/detail.html", function() {
+					$("#add").on("click", function() {
+						Events.event.addEvent(key);
+					});
+					Events.event.displayEvent(key);
+				});
 			},
 			
 			/**
@@ -515,11 +535,16 @@ var Events = (function() {
 			 *	@param { key | null } - the key to add to, or null for default
 			 */
 			toAdd: function(key) {
-				if (key) {
-					location.href = "../add/?q=" + key;
-				} else {
-					location.href = "../add/";
-				}
+				$("#pageContainer").load("pages/add.html", function() {
+					$(".cancelAddBtn").on("click", function() {
+						Events.event.cancelAdd(key);
+					});
+					
+					$(".saveAddBtn").on("click", function() {
+						Events.event.saveAdd(key);
+					});
+					Events.event.displayAdd(key);
+				});
 			},
 			
 			/**
@@ -528,15 +553,9 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toHome: function() {
-				location.href = "../home/";
-			},
-			
-			/**
-			 *	This function navigates to the login page.
-			 *	@param - none
-			 */
-			toLogin: function() {
-				location.href = "../login/";
+				$("#pageContainer").load("pages/home.html", function() {
+					Events.category.displayAllCategories();
+				});
 			}
 		},
 		

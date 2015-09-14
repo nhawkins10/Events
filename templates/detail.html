@@ -1,22 +1,9 @@
-<!DOCTYPE html>
-<html>
-<title>Events</title>
-<meta name="viewport" content="initial-scale=1, maximum-scale=1">
-<meta name="apple-mobile-web-app-capable" content="yes">
-<head>
-<link rel="stylesheet" type="text/css" href="../main.css">
-<link rel="stylesheet" type="text/css" href="detail.css">
-
-<link rel="icon" type="image/png" href="../touch-icon-iphone.png">
-<link rel="apple-touch-icon" href="../touch-icon-iphone.png">
-</head>
-<body>
 <div class='headerBar'>
-	<img class='backButton' src='arrow.png' onclick="javascript:Events.navigate.toHome()">
+	<img class='backButton' src='img/arrow.png' onclick="javascript:Events.navigate.toHome()">
 	<div class='headerTitle' id="eventHeader"></div>
 	<div class='logoutHeader' onclick='javascript:Events.authentication.logout()'>Sign out</div>
 </div>
-<div id="add" onclick="javascript:Events.event.addEvent()">+</div>
+<div id="add">+</div>
 <div class="spinner" id="spinner"></div>
 <div class='canvasContainer'>
 		<canvas name='stats' id='canvas1' width='300' height='200'></canvas>
@@ -35,17 +22,3 @@
 	<div class='logoutFooter toggle' onclick='javascript:Events.authentication.logout()'>Sign out</div>
 	<div class='logoutFooter' onclick='javascript:Events.category.removeCategory()'>Delete category</div>
 </div>
-
-<script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
-<script type="text/javascript" src="../moment.js"></script>
-<script src="../events.js"></script>
-<script>
-	//check if user is authenticated before page finishes loading
-	if (!Events.authentication.userAuthenticated()) {
-		location.href = "../login";
-	} else {
-		Events.event.displayEvent();
-	}
-</script>
-</body>
-</html>
