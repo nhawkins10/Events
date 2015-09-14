@@ -129,7 +129,10 @@ var Events = (function() {
 	
 	function removeCallbacks(key) {
 		var authTokens = JSON.parse(localStorage.events);
-		dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").off();
+		if (key) {
+			dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").off();
+		}
+		dataRef.child("users").child(authTokens.uid).child("categories").off();
 		
 		Events.draw.dates = [];
 	}
@@ -518,6 +521,7 @@ var Events = (function() {
 			 *	@param key - the category key to display details for
 			 */
 			toDetail: function(key) {
+				removeCallbacks(key);
 				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
@@ -538,6 +542,7 @@ var Events = (function() {
 			 *	@param { key | null } - the key to add to, or null for default
 			 */
 			toAdd: function(key) {
+				removeCallbacks(key);
 				$("#pageContainer").load("templates/add.html", function() {
 					$(".cancelAddBtn").on("click", function() {
 						Events.event.cancelAdd(key);
@@ -556,6 +561,7 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toHome: function() {
+				removeCallbacks();
 				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
 				});
