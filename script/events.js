@@ -145,7 +145,9 @@ var Events = (function() {
 								context.msBackingStorePixelRatio ||
 								context.oBackingStorePixelRatio ||
 								context.backingStorePixelRatio || 1,
-			ratio = devicePixelRatio / backingStoreRatio;	
+			ratio = devicePixelRatio / backingStoreRatio;
+
+		alert('device: ' + devicePixelRatio + ' backing: ' + backingStoreRatio);
 			
 		if (devicePixelRatio !== backingStoreRatio) {
 			var oldWidth = canvas.width;
