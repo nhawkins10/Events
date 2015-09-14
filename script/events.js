@@ -137,6 +137,30 @@ var Events = (function() {
 		Events.draw.dates = [];
 	}
 	
+	function scaleCanvas(canvas) {
+		var context = canvas.getContext('2d'),
+			devicePixelRatio = window.devicePixelRation || 1,
+			backingStoreRatio = context.webkitBackingStorePixelRatio ||	
+								context.moxBackingStorePixelRatio ||
+								context.msBackingStorePixelRatio ||
+								context.oBackingStorePixelRatio ||
+								context.backingStorePixelRatio || 1,
+			ratio = devicePixelRatio / backingStoreRatio;	
+			
+		if (devicePixelRatio !== backingStoreRatio) {
+			var oldWidth = canvas.width;
+			var oldHeight = canvas.height;
+			
+			canvas.width = oldWidth * ratio;
+			canvas.height = oldHeight * ratio;
+			
+			canvas.style.width = oldWidth + 'px';
+			canvas.style.height = oldHeight + 'px';
+			
+			context.scale(ratio, ratio);
+		}
+	}
+	
 	return {
 		/**
 		 *	The authentication module exposes functions related 
@@ -613,6 +637,8 @@ var Events = (function() {
 					canvasHeight = document.getElementById('canvas1').height,
 					dates = this.dates.reverse();
 					
+				scaleCanvas(document.getElementById('canvas1'));
+					
 				//calculate time since last record
 				var time = determineTime(new Date(), dates[0]),
 					recentTime = time.value,
@@ -776,6 +802,8 @@ var Events = (function() {
 					canvasHeight = document.getElementById('canvas2').height,
 					dates = this.dates.reverse();
 					
+				scaleCanvas(document.getElementById('canvas2'));
+					
 				//count up the number of times each time of day is present
 				for (var i=0; i<dates.length; i++) {
 					var hour = dates[i].getHours();
@@ -844,6 +872,8 @@ var Events = (function() {
 					canvasWidth = document.getElementById('canvas3').width,
 					canvasHeight = document.getElementById('canvas3').height,
 					dates = this.dates.reverse();
+					
+				scaleCanvas(document.getElementById('canvas3'));
 				
 				//count up the number of times each day of the week is present
 				for (var i=0; i<dates.length; i++) {
