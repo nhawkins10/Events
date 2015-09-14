@@ -491,9 +491,7 @@ var Events = (function() {
 			 *	returns to the previously viewed page.
 			 * 	@param none
 			 */
-			cancelAdd: function() {
-				var key = location.search ? location.search.substring(3, location.search.length) : "";
-				
+			cancelAdd: function(key) {				
 				if (key) {
 					Events.navigate.toDetail(key);
 				} else {
