@@ -139,9 +139,9 @@ var Events = (function() {
 	
 	function scaleCanvas(canvas) {
 		var context = canvas.getContext('2d'),
-			devicePixelRatio = window.devicePixelRation || 1,
+			devicePixelRatio = window.devicePixelRatio || 1,
 			backingStoreRatio = context.webkitBackingStorePixelRatio ||	
-								context.moxBackingStorePixelRatio ||
+								context.mozBackingStorePixelRatio ||
 								context.msBackingStorePixelRatio ||
 								context.oBackingStorePixelRatio ||
 								context.backingStorePixelRatio || 1,
