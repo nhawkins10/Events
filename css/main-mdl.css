@@ -24,7 +24,11 @@
 
 .whiteText {
 	color: white;
-}		
+}	
+
+.hidden {
+	display: none;
+}	
 
 .addBtn {
 	position: fixed;
@@ -55,4 +59,9 @@
 		margin-left: 10px;
 		margin-bottom: 10px;
 	}
+}
+
+#backBtn {
+	cursor: pointer;
+	margin-top: 4px;
 }

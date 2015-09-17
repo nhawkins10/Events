@@ -399,7 +399,7 @@ var Events = (function() {
 				//set the title to the name of the category
 				dataRef.child("users").child(authTokens.uid).child("categories").child(key).once("value", function(snapshot) {
 					var name = snapshot.val();
-					document.getElementById("eventHeader").innerHTML = name.name;
+					document.getElementById("headerTitle").innerHTML = name.name;
 					
 					//set the color of the elements
 					var elements = document.getElementById('eventList').children;
@@ -537,6 +537,8 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toLogin: function() {
+				$("#backBtn").addClass("hidden");
+				$("#headerTitle").text("Events");
 				$("#pageContainer").load("templates/login.html");
 			},
 			
@@ -547,6 +549,7 @@ var Events = (function() {
 			 */
 			toDetail: function(key) {
 				removeCallbacks(key);
+				$("#backBtn").removeClass("hidden");
 				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
@@ -587,6 +590,8 @@ var Events = (function() {
 			 */
 			toHome: function() {
 				removeCallbacks();
+				$("#backBtn").addClass("hidden");
+				$("#headerTitle").text("Events");
 				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
 				});

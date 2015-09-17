@@ -26,9 +26,10 @@
 <!-- Always shows a header, even in smaller screens. -->
 <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
   <header class="mdl-layout__header">
+	<i class="mdl-layout-icon material-icons hidden" id="backBtn" onclick="javascript:Events.navigate.toHome()">arrow_back</i>
     <div class="mdl-layout__header-row">
 		<!-- Title -->
-		<span class="mdl-layout-title">Events</span>
+		<span class="mdl-layout-title" id="headerTitle">Events</span>
 		<!-- Add spacer, to align navigation to the right -->
 		<div class="mdl-layout-spacer"></div>
 		<button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
