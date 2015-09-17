@@ -4,23 +4,44 @@
 <meta name="viewport" content="initial-scale=1, maximum-scale=1">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <head>
-<link rel="stylesheet" type="text/css" href="css/login.css">
-<link rel="stylesheet" type="text/css" href="css/main.css">
-<link rel="stylesheet" type="text/css" href="css/home.css">
-<link rel="stylesheet" type="text/css" href="css/detail.css">
-<link rel="stylesheet" type="text/css" href="css/add.css">
+<link rel="stylesheet" href="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.blue_grey-amber.min.css" /> 
+<link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+
+<!--<link rel="stylesheet" type="text/css" href="css/login.css">-->
+<link rel="stylesheet" type="text/css" href="css/main-mdl.css">
+<!--<link rel="stylesheet" type="text/css" href="css/home.css">-->
+<!--<link rel="stylesheet" type="text/css" href="css/detail.css">-->
+<!--<link rel="stylesheet" type="text/css" href="css/add.css">-->
 
 <link rel="icon" type="image/png" href="img/touch-icon-iphone.png">
 <link rel="apple-touch-icon" href="img/touch-icon-iphone.png">
 
 <script src="https://cdn.firebase.com/js/client/2.2.9/firebase.js"></script>
+<script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
 <script src="script/jquery-min.js"></script>
 <script type="text/javascript" src="script/moment.js"></script>
 <script src="script/events.js"></script>
 </head>
 <body>
-<div id="pageContainer">
-	
+<!-- Always shows a header, even in smaller screens. -->
+<div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+  <header class="mdl-layout__header">
+    <div class="mdl-layout__header-row">
+      <!-- Title -->
+      <span class="mdl-layout-title">Events</span>
+      <!-- Add spacer, to align navigation to the right -->
+      <div class="mdl-layout-spacer"></div>
+    </div>
+  </header>
+  <div class="mdl-layout__drawer">
+    <span class="mdl-layout-title">Events</span>
+    <nav class="mdl-navigation">
+      <a class="mdl-navigation__link" href="" onclick="javascript:Events.authentication.logout()">Sign out</a>
+    </nav>
+  </div>
+  <main class="mdl-layout__content">
+    <div class="page-content" id="pageContainer"><!-- Your content goes here --></div>
+  </main>
 </div>
 
 <script>

@@ -1,7 +1,7 @@
 body {
 	padding: 0;
 	margin: 0;
-	background-color: #fff;
+	background-color: #3f3f3f;
 	font-family: Tahoma, Geneva, sans-serif;
 }
 
@@ -97,6 +97,7 @@ a {
     bottom: 0px;
     width: 100%;
     height: 3em;
+	color: #fff;
 }
 
 .logoutFooter {

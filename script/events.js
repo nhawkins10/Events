@@ -318,8 +318,11 @@ var Events = (function() {
 			 */
 			displayCategory: function(name, color, key) {
 				var categoryList = document.getElementById("categoryList");
-				categoryList.innerHTML = categoryList.innerHTML + 
-					"<li class='categoryItem " + translateColor(color).name + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
+				//categoryList.innerHTML = categoryList.innerHTML + 
+				//	"<li class='categoryItem " + translateColor(color).name + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
+				
+				categoryList.innerHTML = categoryList.innerHTML +
+					"<div class='categoryItem " + translateColor(color).name + " mdl-shadow--2dp' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\"><div class='whiteText mdl-card__title'>" + name + "</div></div>";
 			},
 			
 			/**

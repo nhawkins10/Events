@@ -8,7 +8,7 @@
 	float: left;
     z-index: 100;
 	margin-bottom: 3em;
-    background-color: #fff;
+    background-color: #3f3f3f;
 }
 
 @media (max-width: 699px) {

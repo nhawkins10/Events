@@ -1,0 +1,58 @@
+.red {
+	background-color: #F44336;
+}
+
+.orange {
+	background-color: #FF9800;
+}
+
+.yellow {
+	background-color: #795548;
+}
+
+.green {
+	background-color: #4CAF50;
+}
+
+.blue {
+	background-color: #00BCD4;
+}
+
+.purple {
+	background-color: #9C27B0;
+}
+
+.whiteText {
+	color: white;
+}		
+
+.addBtn {
+	position: fixed;
+	bottom: 20px;
+	right: 20px;
+}
+
+#categoryList {
+	padding: 0;
+}
+.categoryItem {
+	cursor: pointer;
+}
+
+@media (max-width: 699px) {
+	.categoryItem {
+		margin-bottom: 5px;
+		width: 100%;
+		padding: 5px 0;
+	}
+}
+
+@media (min-width: 700px) {
+	.categoryItem {
+	    width: 180px;
+		height: 180px;
+		float: left;
+		margin-left: 10px;
+		margin-bottom: 10px;
+	}
+}
