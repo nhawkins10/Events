@@ -411,14 +411,12 @@ var Events = (function() {
 						//}
 						
 						//create HTML for event
-						//if (document.getElementById("eventList")) {
-							Events.event.displayEntry(temp.time, name.color);
-							
-							//add date to list for graphics
-							var arr = temp.time.split(/[- :]/),
-								date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]);
-							Events.draw.dates.push(date);
-						//}
+						Events.event.displayEntry(temp.time, name.color);
+						
+						//add date to list for graphics
+						var arr = temp.time.split(/[- :]/),
+							date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]);
+						Events.draw.dates.push(date);
 					});
 					
 					//make a call to draw the graphics

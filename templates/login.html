@@ -1,11 +1,18 @@
-<div class='headerBar'>
-	<div class='headerTitle'>Events</div>
-</div>
 <div id='loginForm'>
 	<input class='loginInput' id='loginUser' type='email' placeholder='Username' required>
 	<input class='loginInput' id='loginPw' type='password' placeholder='Password' required>
 	<div class='error' id='loginError'></div>
-	<button class='button' id='loginBtn' onclick='javascript:Events.authentication.login()'>Login</button>
-	<button class='button hidden' id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>Sign up</button>
-	<a id='toggleCreateUserBtn' href="javascript:Events.authentication.toggleCreateUser()">Create an account</a>
+	
+	<!-- Accent-colored raised button -->
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='loginBtn' onclick='javascript:Events.authentication.login()'>
+	  Login
+	</button>
+	<!-- Accent-colored raised button -->
+	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden"  id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>
+	  Sign Up
+	</button>
+	<!-- Flat button -->
+	<button class="mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.authentication.toggleCreateUser()">
+	  Create an account
+	</button>
 </div>
