@@ -34,6 +34,7 @@
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
+	z-index: 1000;
 }
 
 #categoryList {
@@ -64,4 +65,34 @@
 #backBtn {
 	cursor: pointer;
 	margin-top: 4px;
+}
+
+.dashboardCard {
+	margin-top: 20px;
+	margin-left: 20px;
+	float: left;
+}
+
+.dashboardCard:last-child {
+	margin-bottom: 90px;
+}
+
+.canvasTitle {
+	border-bottom: 1px solid #ccc;
+}
+
+#eventList {
+	list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.eventItem {
+	color: white;
+    padding: 20px;
+    margin-top: 10px;
+}
+
+.eventItem:last-child {
+	margin-bottom: 90px;
 }

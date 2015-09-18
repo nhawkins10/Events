@@ -31,30 +31,28 @@ var Events = (function() {
 		switch (colorId) {
 			case "1":
 				color.name = "red";
-				color.hex = "#D92C2C";
+				color.hex = "#F44336";
 				break;
 			case "2":
 				color.name = "orange";
-				color.hex = "#EA881B";
+				color.hex = "#FF9800";
 				break;
 			case "3":
 				color.name = "yellow";
-				color.hex = "#F0D911";
+				color.hex = "#795548";
 				break;
 			case "4":
 				color.name = "green";
-				color.hex = "#45C137";
+				color.hex = "#4CAF50";
 				break;
 			case "5":
 				color.name = "blue";
-				color.hex = "#3693AE";
+				color.hex = "#00BCD4";
 				break;
 			case "6":
 				color.name = "purple";
-				color.hex = "#9D47C7";
+				color.hex = "#9C27B0";
 				break;
-			default:
-				color.name = "blue";
 		}
 		return color;
 	};
@@ -317,12 +315,9 @@ var Events = (function() {
 			 * 	@param key - the category identifier
 			 */
 			displayCategory: function(name, color, key) {
-				var categoryList = document.getElementById("categoryList");
-				//categoryList.innerHTML = categoryList.innerHTML + 
-				//	"<li class='categoryItem " + translateColor(color).name + "' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\">" + name + "</li>";
-				
+				var categoryList = document.getElementById("categoryList");				
 				categoryList.innerHTML = categoryList.innerHTML +
-					"<div class='categoryItem " + translateColor(color).name + " mdl-shadow--2dp' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\"><div class='whiteText mdl-card__title'>" + name + "</div></div>";
+					"<div class='categoryItem " + translateColor(color).name + " mdl-shadow--4dp' onclick=\"javascript:Events.navigate.toDetail(\'" + key + "\')\"><div class='whiteText mdl-card__title'>" + name + "</div></div>";
 			},
 			
 			/**
@@ -537,8 +532,11 @@ var Events = (function() {
 			 *	@param - none
 			 */
 			toLogin: function() {
+				//update main menu bar
 				$("#backBtn").addClass("hidden");
 				$("#headerTitle").text("Events");
+				$("#demo-menu-lower-right").addClass("hidden");
+				
 				$("#pageContainer").load("templates/login.html");
 			},
 			
@@ -549,7 +547,11 @@ var Events = (function() {
 			 */
 			toDetail: function(key) {
 				removeCallbacks(key);
+				
+				//update main menu bar
 				$("#backBtn").removeClass("hidden");
+				$("#deleteBtn").removeClass("hidden");
+				
 				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
@@ -558,6 +560,8 @@ var Events = (function() {
 					$("#deleteBtn").on("click", function() {
 						Events.category.removeCategory(key);
 					});
+					
+					componentHandler.upgradeElement(document.getElementById('detailPage'));
 					Events.event.displayEvent(key);
 				});
 			},
@@ -590,8 +594,13 @@ var Events = (function() {
 			 */
 			toHome: function() {
 				removeCallbacks();
+				
+				//update main menu bar
 				$("#backBtn").addClass("hidden");
 				$("#headerTitle").text("Events");
+				$("#deleteBtn").addClass("hidden");
+				$("#demo-menu-lower-right").removeClass("hidden");
+				
 				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
 				});
@@ -606,31 +615,6 @@ var Events = (function() {
 		 */
 		draw: {
 			dates: [],
-			
-			currentCanvas: 1,
-			canvasCount: 3,
-			
-			nextCanvas: function() {
-				document.getElementById('canvas' + this.currentCanvas).className = "hidden";
-				if (this.currentCanvas == this.canvasCount) {
-					this.currentCanvas = 1;
-				} else {
-					this.currentCanvas++;
-				}
-				
-				document.getElementById('canvas' + this.currentCanvas).className = "";
-			},
-			
-			prevCanvas: function() {
-				document.getElementById('canvas' + this.currentCanvas).className = "hidden";
-				if (this.currentCanvas == 1) {
-					this.currentCanvas = this.canvasCount;
-				} else {
-					this.currentCanvas--;
-				}
-				
-				document.getElementById('canvas' + this.currentCanvas).className = "";
-			},
 			
 			/**
 			 *	This function populates the canvas with the stats data. It calculates
