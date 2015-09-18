@@ -471,6 +471,13 @@ var Events = (function() {
 						
 					dropDown.innerHTML = dropDown.innerHTML + 
 						"<option value='" + snapshot.key() + "' " + (key == snapshot.key() ? "selected" : "") + ">" + category.name + "</option>";
+						
+				});
+				
+				dataRef.child("users").child(authTokens.uid).child("categories").once("value", function(snapshot) {
+					if (dropDown.innerHTML.indexOf('option') == -1) {
+						Events.category.toggleNewCategory();
+					}
 				});
 			},
 			
