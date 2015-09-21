@@ -1,17 +1,40 @@
 <div id='loginForm'>
-	<input class='loginInput' id='loginUser' type='email' placeholder='Username' required>
-	<input class='loginInput' id='loginPw' type='password' placeholder='Password' required>
+	<form action="#">
+		<div class="newUserFields">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginFNameContaier">
+				<input class="mdl-textfield__input" type="text" id="loginFName" />
+				<label class="mdl-textfield__label" for="loginPw">First Name</label>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginLNameContaier">
+				<input class="mdl-textfield__input" type="text" id="loginLName" />
+				<label class="mdl-textfield__label" for="loginPw">Last Name</label>
+			</div>
+		</div>
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginUserContaier">
+			<input class="mdl-textfield__input" type="email" id="loginUser" />
+			<label class="mdl-textfield__label" for="loginUser">Username</label>
+			<span class="mdl-textfield__error">Must be an email.</span>
+		</div>
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginPassContaier">
+			<input class="mdl-textfield__input" type="password" id="loginPw" />
+			<label class="mdl-textfield__label" for="loginPw">Password</label>
+		</div>
+		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginPass2Contaier">
+			<input class="mdl-textfield__input" type="text" id="loginPass2" />
+			<label class="mdl-textfield__label" for="loginPw">Password Again</label>
+			<span class="mdl-textfield__error" id="passwordMatch">Passwords must match.</span>
+		</div>
+	</form>
 	<div class='error' id='loginError'></div>
-	
-	<!-- Accent-colored raised button -->
+	<!--Login button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='loginBtn' onclick='javascript:Events.authentication.login()'>
 	  Login
 	</button>
-	<!-- Accent-colored raised button -->
+	<!-- Create account button -->
 	<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden"  id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>
 	  Sign Up
 	</button>
-	<!-- Flat button -->
+	<!-- toggle create account button -->
 	<button class="mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.authentication.toggleCreateUser()">
 	  Create an account
 	</button>

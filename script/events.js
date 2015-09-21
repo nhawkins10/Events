@@ -180,7 +180,6 @@ var Events = (function() {
 						password: pw
 					}, function(error, userData) {
 						if (error) {
-							console.log("Login Failed!", error);
 							switch (error.code) {
 								case "INVALID_EMAIL":
 								case "INVALID_PASSWORD":
@@ -192,9 +191,7 @@ var Events = (function() {
 								default:
 									$("#loginError").text("There was an error logging in.");
 							}
-						} else {
-							console.log("Authenticated successfully");
-							
+						} else {							
 							//set session tokens
 							localStorage.events = JSON.stringify({token: userData.token, uid: userData.uid});
 							
@@ -238,7 +235,6 @@ var Events = (function() {
 						password: pw
 					}, function(error, userData) {
 						if (error) {
-							console.log("Create User Failed!", error);
 							switch (error.code) {
 								case "EMAIL_TAKEN":
 									$("#loginError").text("That username is already taken.");
@@ -249,9 +245,7 @@ var Events = (function() {
 								default:
 									$("#loginError").text("There was an error creating an account.");
 							}
-						} else {
-							console.log("Authenticated successfully", userData);
-							
+						} else {							
 							//create space for new user in database
 							dataRef.child("users").child(userData.uid).set(
 								{
@@ -366,11 +360,11 @@ var Events = (function() {
 				if ($("#newCatForm").hasClass("hidden")) {
 					$("#newCatForm").removeClass("hidden");
 					$("#categoryPicker").addClass("hidden");
-					$(".addCatBtn").addClass("rotate");
+					$(".addCatBtn").text("clear");
 				} else {
 					$("#newCatForm").addClass("hidden");
 					$("#categoryPicker").removeClass("hidden");
-					$(".addCatBtn").removeClass("rotate");
+					$(".addCatBtn").text("add");
 				}
 			}
 		},
@@ -542,7 +536,14 @@ var Events = (function() {
 				$("#headerTitle").text("Events");
 				$("#demo-menu-lower-right").addClass("hidden");
 				
-				$("#pageContainer").load("templates/login.html");
+				$("#pageContainer").load("templates/login.html", function() {
+					//update material design elements
+					componentHandler.upgradeElement(document.getElementById('loginUserContaier'));
+					componentHandler.upgradeElement(document.getElementById('loginPassContaier'));
+					componentHandler.upgradeElement(document.getElementById('toggleCreateUserBtn'));
+					componentHandler.upgradeElement(document.getElementById('loginBtn'));
+					componentHandler.upgradeElement(document.getElementById('signUpBtn'));
+				});
 			},
 			
 			/**
@@ -588,6 +589,11 @@ var Events = (function() {
 					$(".saveAddBtn").on("click", function() {
 						Events.event.saveAdd(key);
 					});
+					
+					//update material design elements
+					componentHandler.upgradeElement(document.getElementById('newCatBtn'));
+					componentHandler.upgradeElement($(".cancelAddBtn")[0]);
+					componentHandler.upgradeElement($(".saveAddBtn")[0]);
 					Events.event.displayAdd(key);
 				});
 			},

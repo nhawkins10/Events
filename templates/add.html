@@ -1,14 +1,10 @@
-<div class='headerBar'>
-	<div class='headerBtn cancelAddBtn'>Cancel</div>
-	<div class='headerTitle'>Add</div>
-	<div class='headerBtn saveAddBtn'>Save</div>
-</div>
-
 <div class='addDialog'>
 	<div class='label'>Select catagory</div>
 	<select id="categoryPicker">
 	</select>
-	<img class="addCatBtn" src="img/plus.png" onclick="javascript:Events.category.toggleNewCategory()">
+	<button class="mdl-button mdl-js-button mdl-button--icon" id="newCatBtn" onclick="javascript:Events.category.toggleNewCategory()">
+	  <i class="addCatBtn material-icons">add</i>
+	</button>
 	<span id="newCatForm" class="hidden">
 		<input id="newCatName" type="text" placeholder="New Category">
 		<select id="newCatColor">
@@ -25,7 +21,11 @@
 	<div class='label'>Set time</div>
 	<input type="time" id="eventTime">
 	<div class='dialogBtn'>
-		<div class='cancelAddBtn'>Cancel</div>
-		<div class='saveAddBtn'>Save</div>
+		<button class="cancelAddBtn mdl-button mdl-js-button  mdl-js-ripple-effect">
+		  Cancel
+		</button>
+		<button class="saveAddBtn mdl-button mdl-js-button  mdl-js-ripple-effect">
+		  Save
+		</button>
 	</div>
 </div>
