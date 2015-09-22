@@ -564,6 +564,9 @@ var Events = (function() {
 				$("#headerTitle").text("Events");
 				$("#demo-menu-lower-right").addClass("hidden");
 				
+				//hide add button
+				$(".addBtn").addClass("hidden");
+				
 				$("#pageContainer").load("templates/login.html", function() {
 					//update material design elements
 					componentHandler.upgradeElement(document.getElementById('loginFNameContaier'));
@@ -587,6 +590,9 @@ var Events = (function() {
 				//update main menu bar
 				$("#backBtn").removeClass("hidden");
 				$("#deleteBtn").removeClass("hidden");
+				
+				//hide add button
+				$(".addBtn").removeClass("hidden");
 				
 				$("#pageContainer").load("templates/detail.html", function() {
 					$("#add").on("click", function() {
@@ -620,6 +626,9 @@ var Events = (function() {
 						Events.event.saveAdd(key);
 					});
 					
+					//hide add button
+					$(".addBtn").addClass("hidden");
+					
 					//update material design elements
 					componentHandler.upgradeElement(document.getElementById('newCatBtn'));
 					componentHandler.upgradeElement($(".cancelAddBtn")[0]);
@@ -641,6 +650,9 @@ var Events = (function() {
 				$("#headerTitle").text("Events");
 				$("#deleteBtn").addClass("hidden");
 				$("#demo-menu-lower-right").removeClass("hidden");
+				
+				//hide add button
+				$(".addBtn").removeClass("hidden");
 				
 				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
