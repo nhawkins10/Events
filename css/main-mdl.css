@@ -37,10 +37,6 @@
 
 .addBtn {
 	position: fixed;
-	position: -webkit-sticky;
-	position: -moz-sticky;
-	position: -ms-sticky;
-	position: -o-sticky;
 	bottom: 20px;
 	right: 20px;
 	z-index: 1000;
