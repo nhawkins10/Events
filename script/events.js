@@ -169,10 +169,12 @@ var Events = (function() {
 			 *	This function allows an existing user to be authenticated.
 			 *	@param userParam - optional username, defaults to value of username textbox
 			 * 	@param pwParam - optional password, defaults to value of password textbox
+			 *	@return a promise that is resolved after the user is authenticated
 			 */
 			login: function(userParam, pwParam) {	
 				var user = userParam || document.getElementById('loginUser').value;
 				var pw = pwParam || document.getElementById('loginPw').value;
+				var promise = $.Deferred();
 				
 				if (user != "" && pw != "") {
 					dataRef.authWithPassword({
@@ -191,15 +193,20 @@ var Events = (function() {
 								default:
 									$("#loginError").text("There was an error logging in.");
 							}
+							promise.reject();
 						} else {							
 							//set session tokens
 							localStorage.events = JSON.stringify({token: userData.token, uid: userData.uid});
+							
+							promise.resolve();
 							
 							//redirect to main category view
 							Events.navigate.toHome();
 						}
 					});
 				}
+				
+				return promise;
 			},
 			
 			logout: function() {
@@ -213,11 +220,13 @@ var Events = (function() {
 					$("#loginBtn").addClass("hidden");
 					$("#toggleCreateUserBtn").text("Already have an account");
 					$("#loginError").text("");
+					$(".newUserFields").removeClass("hidden");
 				} else {
 					$("#signUpBtn").addClass("hidden");
 					$("#loginBtn").removeClass("hidden");
 					$("#toggleCreateUserBtn").text("Create an account");
 					$("#loginError").text("");
+					$(".newUserFields").addClass("hidden");
 				}
 			},
 			
@@ -226,10 +235,25 @@ var Events = (function() {
 			 * 	@param none
 			 */
 			createUser: function() {
-				var user = document.getElementById('loginUser').value,
-					pw = document.getElementById('loginPw').value;
+				try {
+					var user = document.getElementById('loginUser').value,
+						pw = document.getElementById('loginPw').value,
+						fName = document.getElementById('loginFName').value,
+						lName = document.getElementById('loginLName').value;
+				} catch (error) {
+					$("#loginError").text("All fields are required.");
+				}
 				
-				if (user != "" && pw != "") {
+				var allFieldsValid = true;
+				$(".mdl-textfield").each(function(i, index) {
+					if ($(index).hasClass("is-invalid")) {
+						allFieldsValid = false;
+					}
+				});
+				
+				if (!allFieldsValid) {
+					$("#loginError").text("Invalid field.");
+				} else if (fName != "" && lName != "" && user != "" && pw != "") {
 					dataRef.createUser({
 						email: user,
 						password: pw
@@ -245,21 +269,25 @@ var Events = (function() {
 								default:
 									$("#loginError").text("There was an error creating an account.");
 							}
-						} else {							
-							//create space for new user in database
-							dataRef.child("users").child(userData.uid).set(
-								{
-									identification: {
-										provider: "password",
-										email: user
-									}
-								}
-							);
-							
+						} else {	
 							//authenticate the new user
-							Events.authentication.login(user, pw);
+							Events.authentication.login(user, pw).then(function() {
+								//add the new user in the database
+								dataRef.child("users").child(userData.uid).set(
+									{
+										identification: {
+											provider: "password",
+											email: user,
+											firstName: fName,
+											lastName: lName
+										}
+									}
+								);
+							});
 						}
 					});
+				} else {
+					$("#loginError").text("All fields are required.");
 				}
 			},
 			
@@ -538,6 +566,8 @@ var Events = (function() {
 				
 				$("#pageContainer").load("templates/login.html", function() {
 					//update material design elements
+					componentHandler.upgradeElement(document.getElementById('loginFNameContaier'));
+					componentHandler.upgradeElement(document.getElementById('loginLNameContaier'));
 					componentHandler.upgradeElement(document.getElementById('loginUserContaier'));
 					componentHandler.upgradeElement(document.getElementById('loginPassContaier'));
 					componentHandler.upgradeElement(document.getElementById('toggleCreateUserBtn'));

@@ -47,8 +47,43 @@
  * ---------     Login styles     --------------
  * ----------------------------------------------
  */
+#loginForm {
+	width: 300px;
+	margin-left: calc(50% - 150px);
+	padding: 15px;
+	top: 3em;
+}
+
  #loginForm div {
 	display: block;
+ }
+ 
+ #loginForm .newUserFields  div {
+	display: inline-block;
+	width: 120px;
+ }
+ 
+ .newUserFields div:last-child {
+	margin-left: 20px;
+ }
+ 
+ #loginError {
+	width: 100%;
+    text-align: center;
+    margin-bottom: 10px;
+    color: #de3226;
+ }
+ 
+ .loginBtnContainer {
+	text-align: center;
+ }
+ 
+ .loginBtn {
+	display: inline;
+ }
+ 
+ .loginBtn:last-child {
+	 margin-top: 15px;
  }
 
 
