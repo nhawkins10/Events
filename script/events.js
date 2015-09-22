@@ -117,9 +117,9 @@ var Events = (function() {
 		} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'hours')) > 0) {
 			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'hours'));
 			time.label = 'hour' + (time.value > 1 ? "s" : "");
-		} else if (Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes')) > 0) {
+		} else {
 			time.value = Math.abs(newerDateMoment.diff(olderDateMoment, 'minutes'));
-			time.label = 'minute' + (time.value > 1 ? "s" : "");
+			time.label = 'minute' + ((time.value > 1 || time.value == 0) ? "s" : "");
 		}
 		
 		return time;
@@ -389,6 +389,7 @@ var Events = (function() {
 					$("#newCatForm").removeClass("hidden");
 					$("#categoryPicker").addClass("hidden");
 					$(".addCatBtn").text("clear");
+					$("#newCatName").focus();
 				} else {
 					$("#newCatForm").addClass("hidden");
 					$("#categoryPicker").removeClass("hidden");

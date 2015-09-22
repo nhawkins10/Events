@@ -1,26 +1,28 @@
-<div class='addDialog'>
-	<div class='label'>Select catagory</div>
-	<select id="categoryPicker">
-	</select>
-	<button class="mdl-button mdl-js-button mdl-button--icon" id="newCatBtn" onclick="javascript:Events.category.toggleNewCategory()">
-	  <i class="addCatBtn material-icons">add</i>
-	</button>
-	<span id="newCatForm" class="hidden">
-		<input id="newCatName" type="text" placeholder="New Category">
-		<select id="newCatColor">
-			<option value="1">Red</option>
-			<option value="2">Orange</option>
-			<option value="3">Yellow</option>
-			<option value="4">Green</option>
-			<option value="5">Blue</option>
-			<option value="6">Purple</option>
+<div class='addDialog mdl-card mdl-shadow--4dp'>
+	<div class="mdl-card__supporting-text">
+		<div class='label'>Select catagory</div>
+		<select id="categoryPicker">
 		</select>
-	</span>
-	<div class='label'>Set date</div>
-	<input type="date" id="eventDate">
-	<div class='label'>Set time</div>
-	<input type="time" id="eventTime">
-	<div class='dialogBtn'>
+		<button class="mdl-button mdl-js-button mdl-button--icon" id="newCatBtn" onclick="javascript:Events.category.toggleNewCategory()">
+		  <i class="addCatBtn material-icons">add</i>
+		</button>
+		<span id="newCatForm" class="hidden">
+			<input id="newCatName" type="text" placeholder="New Category">
+			<select id="newCatColor">
+				<option value="1">Red</option>
+				<option value="2">Orange</option>
+				<option value="3">Yellow</option>
+				<option value="4">Green</option>
+				<option value="5">Blue</option>
+				<option value="6">Purple</option>
+			</select>
+		</span>
+		<div class='label'>Set date</div>
+		<input type="date" id="eventDate">
+		<div class='label'>Set time</div>
+		<input type="time" id="eventTime">
+	</div>
+	<div class='dialogBtn  mdl-card__actions mdl-card--border'>
 		<button class="cancelAddBtn mdl-button mdl-js-button  mdl-js-ripple-effect">
 		  Cancel
 		</button>

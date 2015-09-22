@@ -167,3 +167,49 @@
 .eventItem:last-child {
 	margin-bottom: 90px;
 }
+
+
+/* ----------------------------------------------
+ * -----------     Add styles     ---------------
+ * ----------------------------------------------
+ */
+ .addDialog {
+	width: 300px;
+	margin-top: 20px;
+	margin-left: calc(50% - 150px);
+ }
+ 
+ .addDialog input {
+	height: 32px;
+    width: 250px;
+	padding: 0 5px;
+ }
+ 
+ #categoryPicker {
+	height: 32px;
+	width: 234px;
+	padding: 0 5px;
+ }
+ 
+ #newCatName {
+	width: 214px;
+ }
+ 
+ #newCatColor {
+	width: 264px;
+    height: 32px;
+    margin-top: 5px;
+ }
+ 
+ .addDialog .label {
+	margin-top: 20px;
+	margin-bottom: 5px;
+ }
+ 
+ .addDialog .label:first-child {
+	margin-top: 0;
+ }
+ 
+ .dialogBtn {
+	 text-align: center;
+ }
