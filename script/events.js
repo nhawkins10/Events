@@ -574,6 +574,18 @@ var Events = (function() {
 					componentHandler.upgradeElement(document.getElementById('toggleCreateUserBtn'));
 					componentHandler.upgradeElement(document.getElementById('loginBtn'));
 					componentHandler.upgradeElement(document.getElementById('signUpBtn'));
+					
+					//event listener for logging in
+					$("body").on("keypress", function(event) {
+						if (event.which == 10 || event.which == 13) {
+							$("body").off("keypress");
+							if ($("#loginBtn").hasClass("hidden")) {
+								Events.authentication.createUser();
+							} else {
+								Events.authentication.login();
+							}
+						}
+					});
 				});
 			},
 			
