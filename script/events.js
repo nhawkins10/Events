@@ -38,7 +38,7 @@ var Events = (function() {
 				color.hex = "#FF9800";
 				break;
 			case "3":
-				color.name = "yellow";
+				color.name = "brown";
 				color.hex = "#795548";
 				break;
 			case "4":
