@@ -323,7 +323,7 @@ var Events = (function() {
 				dataRef.child("users").child(authTokens.uid).child("categories").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
 					//hide loading spinner
-					document.getElementById('spinner').className = "";
+					$(".spinner").addClass("hidden");
 					
 					//create HTML for category
 					Events.category.displayCategory(temp.name, temp.color, snapshot.key());
@@ -428,11 +428,6 @@ var Events = (function() {
 					//display all events(timestamps) associated with the given category
 					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
 						var temp = snapshot.val();
-						//hide loading spinner
-						//if (document.getElementById('spinner')) {
-							document.getElementById('spinner').className = "";
-						//}
-						
 						//create HTML for event
 						Events.event.displayEntry(temp.time, name.color);
 						
@@ -564,6 +559,9 @@ var Events = (function() {
 				$("#backBtn").addClass("hidden");
 				$("#headerTitle").text("Events");
 				$("#demo-menu-lower-right").addClass("hidden");
+				
+				//hide loading spinner
+				$(".spinner").addClass("hidden");
 				
 				$("#pageContainer").load("templates/login.html", function() {
 					//update material design elements
