@@ -211,8 +211,15 @@
 	padding: 0 5px;
  }
  
+ #newCatNameContainer {
+	display: inline-block;
+    width: 222px;
+    margin-left: 5px;
+ }
+ 
  #newCatName {
-	width: 214px;
+	width: 222px;
+	padding: 0;
  }
  
  #newCatColor {

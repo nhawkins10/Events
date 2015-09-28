@@ -7,7 +7,12 @@
 		  <i class="addCatBtn material-icons">add</i>
 		</button>
 		<span id="newCatForm" class="hidden">
-			<input id="newCatName" type="text" placeholder="New Category">
+			<!--<input id="newCatName" type="text" placeholder="New Category">-->
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="newCatNameContainer">
+				<input class="mdl-textfield__input" type="text" pattern=".{0,25}" id="newCatName" />
+				<label class="mdl-textfield__label" for="newCatName">New Category</label>
+				<span class="mdl-textfield__error">Can't be more than 25 characters</span>
+			</div>
 			<select id="newCatColor">
 				<option value="5">Blue</option>
 				<option value="3">Brown</option>

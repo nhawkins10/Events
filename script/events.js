@@ -509,6 +509,10 @@ var Events = (function() {
 					
 				//determine the category
 				if ($("#categoryPicker").hasClass("hidden")) {
+					//check if error exist in input fields
+					if ($("#newCatNameContainer").hasClass("is-invalid")) {
+						return;
+					}
 					var category = document.getElementById("newCatName").value,
 						categoryColor = document.getElementById("newCatColor").value;
 					
@@ -632,9 +636,9 @@ var Events = (function() {
 					});
 					
 					//update material design elements
-					componentHandler.upgradeElement(document.getElementById('newCatBtn'));
 					componentHandler.upgradeElement($(".cancelAddBtn")[0]);
 					componentHandler.upgradeElement($(".saveAddBtn")[0]);
+					componentHandler.upgradeElement(document.getElementById('newCatNameContainer'));
 					Events.event.displayAdd(key);
 				});
 			},
