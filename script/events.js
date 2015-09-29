@@ -1,7 +1,8 @@
 /**
  *	The Events module allows for the creation of various custom categories and the 
  *	creation of multiple events (timestamps) within each category. Authentication
- *	and data storage are provided by Firebase.
+ *	and data storage are provided by Firebase (firebase.com). Timestamp manipulation are provided
+ * 	by moment.js (momentjs.org).
  *
  *	Created: August 10, 2015
  * 	Author: Nathan Hawkins
@@ -10,12 +11,28 @@ var Events = (function() {
 	var dataRef = new Firebase("https://flickering-torch-7386.firebaseio.com/");
 	var months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 	
+	/**
+	 *	This function takes the current date and
+	 *	formats in to the correct format to be used
+	 *	as the default for a date input.
+	 *	@param - none
+	 *	@return - the formatted date string
+	 *	@private
+	 */
 	function toDateInputValue() {
 		var local = new Date();
 		local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
 		return local.toJSON().slice(0,10);
 	};
 	
+	/**
+	 *	This function takes the current time and
+	 *	formats in to the correct format to be used
+	 *	as the default for a time input.
+	 *	@param - none
+	 *	@return - the formatted time string
+	 *	@private
+	 */
 	function toTimeInputValue() {
 		var local = new Date();
 		local.setMinutes(local.getMinutes() - local.getTimezoneOffset());
@@ -23,6 +40,13 @@ var Events = (function() {
 		return local.split(".")[0];
 	};
 	
+	/**
+	 *	This function takes a given color ID and translates it
+	 *	to a given color
+	 *	@param colorId - a color's number ID
+	 *	@return - an object with two elements: name is the string identifier of the color, hex is the hex value of the color
+	 *	@private
+	 */
 	function translateColor(colorId) {
 		var color = {
 			name: '',
@@ -57,6 +81,17 @@ var Events = (function() {
 		return color;
 	};
 	
+	/**
+	 *	This function takes a timestamp and formats it into an 
+	 *	easily readable format. If the timestamp is today just
+	 *	the time is shown. If the timestamp is in the same year
+	 *	the date is formatted like: August 13 12:35 pm. If the
+	 *	timestamp is in a previous year it's formatted like:
+	 *	August 13, 2014 12:35 pm.
+	 *	@param timestamp - the timestamp to format
+	 *	@return - the formatted date string
+	 *	@private
+	 */
 	function formatDate(timestamp) {
 		var arr = timestamp.split(/[- :]/),
 			date = new Date(arr[0], arr[1]-1, arr[2], arr[3], arr[4]),
@@ -85,6 +120,12 @@ var Events = (function() {
 		return dateString;
 	};
 	
+	/**
+	 *	This function determins if the give date is today.
+	 *	@param date - the date to check
+	 *	@return - true if date is today, false otherwise
+	 *	@private
+	 */
 	function isToday(date) {
 		var today = new Date();
 		
@@ -97,6 +138,17 @@ var Events = (function() {
 		return false;
 	};
 	
+	/**
+	 *	This function determines the best unit of time to use
+	 *	to describe the difference between the given dates. It
+	 *	uses to the largest whole unit of time possible and 
+	 *	defaults to 'minutes' if the time difference is less than
+	 * 	minute.
+	 *	@param newerDate - the first date to use for comparison
+	 *	@param olderData - the second date to use for comparison
+	 *	@return - object containing two elements: value is the length of time, label is the unit of time
+	 *	@private
+	 */
 	function determineTime(newerDate, olderDate) {
 		var time = {
 			value: 0,
@@ -125,6 +177,11 @@ var Events = (function() {
 		return time;
 	}
 	
+	/**
+	 *	This function removes existing callbacks and resets data.
+	 *	@param key - optional, used to remove callbacks for a specific category
+	 *	@private
+	 */
 	function removeCallbacks(key) {
 		var authTokens = JSON.parse(localStorage.events);
 		if (key) {
@@ -135,6 +192,12 @@ var Events = (function() {
 		Events.draw.dates = [];
 	}
 	
+	/**
+	 *	This function takes the given canvas and scales it appropriately
+	 *	to account for high pixel density screens.
+	 *	@param canvas - the canvas to scale
+	 *	@private
+	 */
 	function scaleCanvas(canvas) {
 		var context = canvas.getContext('2d'),
 			devicePixelRatio = window.devicePixelRatio || 1,
@@ -159,6 +222,14 @@ var Events = (function() {
 		}
 	}
 	
+	/**
+	 *	This function shows a dialog box with the given details.
+	 *	@param title - the title for the dialog
+	 *	@param text - the body text for the dialog
+	 *	@param buttonText - the text for the confirm button
+	 *	@param callBack - the function to call when the confirm button is clicked
+	 *	@private
+	 */
 	function showPopover(title, text, buttonText, callBack) {
 		$(".popoverTitle").text(title);
 		$(".popoverText").text(text);
@@ -226,11 +297,20 @@ var Events = (function() {
 				return promise;
 			},
 			
+			/**
+			 *	This function unauthenticates the current logged in user
+			 *	@param - none
+			 */
 			logout: function() {
 				dataRef.unauth();
 				Events.navigate.toLogin();
 			},
 			
+			/**
+			 *	This function toggles the UI elements between
+			 *	the login form and the create user form.
+			 *	@param - none
+			 */
 			toggleCreateUser: function() {
 				if ($("#signUpBtn").hasClass("hidden")) {
 					$("#signUpBtn").removeClass("hidden");
@@ -382,6 +462,7 @@ var Events = (function() {
 			/**
 			 * 	This function deletes a category and all events
 			 * 	that are associated with it.
+			 *	@param key - the category identifier for the category to remove
 			 */
 			removeCategory: function(key) {
 				var authTokens = JSON.parse(localStorage.events);
@@ -462,6 +543,7 @@ var Events = (function() {
 			/**
 			 * 	This function creates the markup to display an event (timestamp) for a category.
 			 * 	@param timestamp - the time of the event
+			 *	@param color - the id of the color to use
 			 */
 			displayEntry: function(timestamp, color) {
 				var entryList = document.getElementById("eventList");
@@ -471,8 +553,10 @@ var Events = (function() {
 			/**
 			 *	This function determines if the user is adding to a specific
 			 *	category and redirects to the correct add page
+			 * 	@param key - optional category identifier, used if add is clicked while viewing a category
 			 */
-			addEvent: function(key) {//currently viewing specific category
+			addEvent: function(key) {
+				//currently viewing specific category
 				if (key) {
 					Events.navigate.toAdd(key);
 				
@@ -484,7 +568,7 @@ var Events = (function() {
 			
 			/**
 			 *	This function populates the data on the add event page.
-			 * @param none
+			 * @param key - the category identifier
 			 */
 			displayAdd: function(key) {
 				var authTokens = JSON.parse(localStorage.events),
@@ -513,6 +597,7 @@ var Events = (function() {
 			/**
 			 *	This function saves the new event. It will also handle 
 			 *	creating a new category if necessary.
+			 *	@param key - the category identifier
 			 */
 			saveAdd: function(key) {
 				var date = document.getElementById("eventDate").value,
@@ -551,7 +636,7 @@ var Events = (function() {
 			/**
 			 *	This function discards the new event data, and
 			 *	returns to the previously viewed page.
-			 * 	@param none
+			 * 	@param key - the category identifier
 			 */
 			cancelAdd: function(key) {				
 				if (key) {
