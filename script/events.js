@@ -159,6 +159,23 @@ var Events = (function() {
 		}
 	}
 	
+	function showPopover(title, text, buttonText, callBack) {
+		$(".popoverTitle").text(title);
+		$(".popoverText").text(text);
+		$(".popoverConfirm").text(buttonText);
+		
+		$(".popoverCancel").on("click", function() {
+			$(".popoverCancel").off();
+			$(".overlay").addClass("hidden");
+		});
+		$(".popoverConfirm").on("click", function() {
+			$(".popoverConfirm").off();
+			callBack();
+			$(".overlay").addClass("hidden");
+		});
+		$(".overlay").removeClass("hidden");
+	}
+	
 	return {
 		/**
 		 *	The authentication module exposes functions related 
@@ -367,16 +384,12 @@ var Events = (function() {
 			 * 	that are associated with it.
 			 */
 			removeCategory: function(key) {
-				var authTokens = JSON.parse(localStorage.events),
-					verifyDelete = confirm("Are you sure you want to delete this category and all it's data?");
+				var authTokens = JSON.parse(localStorage.events);
+				//remove the data
+				dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
 				
-				if (verifyDelete) {
-					//remove the data
-					dataRef.child("users").child(authTokens.uid).child("categories").child(key).remove();
-					
-					//return to the list of categories
-					Events.navigate.toHome();
-				}
+				//return to the list of categories
+				Events.navigate.toHome();
 			},
 			
 			/**
@@ -612,7 +625,7 @@ var Events = (function() {
 					
 					$("#deleteBtn").off();
 					$("#deleteBtn").on("click", function() {
-						Events.category.removeCategory(key);
+						showPopover("Confirm Delete", "Are you sure you want to delete this category and all its data?", "Delete", Events.category.removeCategory.bind(this, key));
 					});
 					
 					componentHandler.upgradeElement(document.getElementById('detailPage'));
