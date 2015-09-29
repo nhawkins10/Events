@@ -130,7 +130,7 @@ var Events = (function() {
 		if (key) {
 			dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").off();
 		}
-		dataRef.child("users").child(authTokens.uid).child("categories").off();
+		dataRef.child("users").child(authTokens.uid).child("categories").orderByChild("name").off();
 		
 		Events.draw.dates = [];
 	}
@@ -320,7 +320,7 @@ var Events = (function() {
 			 */
 			displayAllCategories: function() {
 				var authTokens = JSON.parse(localStorage.events);
-				dataRef.child("users").child(authTokens.uid).child("categories").on("child_added", function(snapshot) {
+				dataRef.child("users").child(authTokens.uid).child("categories").orderByChild("name").on("child_added", function(snapshot) {
 					var temp = snapshot.val();
 					//hide loading spinner
 					$(".spinner").addClass("hidden");
@@ -578,6 +578,7 @@ var Events = (function() {
 					componentHandler.upgradeElement(document.getElementById('signUpBtn'));
 					
 					//event listener for logging in
+					$("body").off();
 					$("body").on("keypress", function(event) {
 						if (event.which == 10 || event.which == 13) {
 							$("body").off("keypress");
@@ -604,10 +605,12 @@ var Events = (function() {
 				$("#deleteBtn").removeClass("hidden");
 				
 				$("#pageContainer").load("templates/detail.html", function() {
+					$("#add").off();
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
 					});
 					
+					$("#deleteBtn").off();
 					$("#deleteBtn").on("click", function() {
 						Events.category.removeCategory(key);
 					});
@@ -627,10 +630,12 @@ var Events = (function() {
 			toAdd: function(key) {
 				removeCallbacks(key);
 				$("#pageContainer").load("templates/add.html", function() {
+					$(".cancelAddBtn").off();
 					$(".cancelAddBtn").on("click", function() {
 						Events.event.cancelAdd(key);
 					});
 					
+					$(".saveAddBtn").off();
 					$(".saveAddBtn").on("click", function() {
 						Events.event.saveAdd(key);
 					});
