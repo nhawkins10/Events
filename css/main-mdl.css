@@ -73,10 +73,6 @@
 	padding: 15px;
 	top: 3em;
 }
-
- #loginForm div {
-	display: block;
- }
  
  #loginForm .newUserFields  div {
 	display: inline-block;
@@ -102,8 +98,13 @@
 	display: inline;
  }
  
- .loginBtn:last-child {
-	 margin-top: 15px;
+ .loginBtn-secondary {
+	margin-top: 15px;
+	font-size: 12px;
+ }
+ 
+ .staticPw {
+	 display: none;
  }
 
 
@@ -248,14 +249,14 @@
  
  .popover {
 	position: absolute;
-    height: 170px;
+    min-height: 153px;
     margin-left: calc(50% - 150px);
     margin-top: 150px;
 	z-index: 1100;
  }
  
  .popover.mdl-card {
-	min-height: 170px;
+	min-height: 153px;
 	width: 300px;
  }
  

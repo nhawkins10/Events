@@ -1,41 +1,58 @@
 <div class="mdl-card mdl-shadow--2dp" id='loginForm'>
 	<form action="#">
-		<div class="newUserFields hidden">
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginFNameContaier">
-				<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="loginFName" />
-				<label class="mdl-textfield__label" for="loginPw">First Name</label>
-				<span class="mdl-textfield__error">Must enter a name.</span>
-			</div>
-			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginLNameContaier">
-				<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="loginLName" />
-				<label class="mdl-textfield__label" for="loginPw">Last Name</label>
-				<span class="mdl-textfield__error">Must enter a name.</span>
-			</div>
+		<div class="loginCreate mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginFNameContaier">
+			<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="loginFName" />
+			<label class="mdl-textfield__label" for="loginPw">First Name</label>
+			<span class="mdl-textfield__error">Must enter a name.</span>
 		</div>
-		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginUserContaier">
+		<div class="loginCreate mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginLNameContaier">
+			<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="loginLName" />
+			<label class="mdl-textfield__label" for="loginPw">Last Name</label>
+			<span class="mdl-textfield__error">Must enter a name.</span>
+		</div>
+		<div class="loginDefault loginCreate loginResetEmail mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginUserContaier">
 			<input class="mdl-textfield__input" type="email" id="loginUser" />
-			<label class="mdl-textfield__label" for="loginUser">Username</label>
+			<label class="mdl-textfield__label" for="loginUser">Email</label>
 			<span class="mdl-textfield__error">Must be an email.</span>
 		</div>
-		<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginPassContaier">
+		<div class="loginResetPassword mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<input class="mdl-textfield__input" type="email" disabled id="loginStaticUser" />
+		</div>
+		<div class="loginResetPassword staticPw mdl-textfield mdl-js-textfield mdl-textfield--floating-label">
+			<input class="mdl-textfield__input" type="password" disabled id="loginStaticPw" />
+		</div>
+		<div class="loginDefault loginCreate loginResetPassword mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="loginPassContaier">
 			<input class="mdl-textfield__input" type="password" id="loginPw" />
 			<label class="mdl-textfield__label" for="loginPw">Password</label>
 		</div>
 	</form>
 	<div class='error' id='loginError'></div>
 	<div class="loginBtnContainer mdl-card__actions">
-		<!--Login button -->
-		<button class="loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='loginBtn' onclick='javascript:Events.authentication.login()'>
+		<button class="loginDefault loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='loginBtn' onclick='javascript:Events.authentication.login()'>
 		  Login
 		</button>
-		<!-- Create account button -->
-		<button class="loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden"  id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>
+		<button class="loginCreate loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden"  id='signUpBtn' onclick='javascript:Events.authentication.createUser()'>
 		  Sign Up
 		</button>
+		<button class="loginResetEmail loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden" onclick='javascript:Events.authentication.sendPwResetEmail()'>
+		  Send Reset Email
+		</button>
+		<button class="loginResetPassword loginBtn mdl-button mdl-js-button mdl-button--raised mdl-button--accent hidden" onclick='javascript:Events.authentication.resetPassword()'>
+		  Reset Password
+		</button>
 		<br>
-		<!-- toggle create account button -->
-		<button class="loginBtn mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.authentication.toggleCreateUser()">
+		
+		<button class="loginDefault loginBtn-secondary mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.navigate.toLogin('create')">
 		  Create an account
+		</button>
+		<button class="loginCreate loginBtn-secondary loginDefaultloginBtn mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.navigate.toLogin()">
+		  Already have an account
+		</button>
+		<button class="loginDefault loginBtn-secondary loginDefaultloginBtn mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.navigate.toLogin('resetEmail')">
+		  Forgot your password
+		</button>
+		<button class="loginResetEmail loginBtn-secondary loginResetPassword loginDefaultloginBtn mdl-button mdl-js-button" id='toggleCreateUserBtn' onclick="javascript:Events.navigate.toLogin()">
+		  Back to login
 		</button>
 	</div>
 </div>

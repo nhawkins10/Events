@@ -230,18 +230,33 @@ var Events = (function() {
 	 *	@param callBack - the function to call when the confirm button is clicked
 	 *	@private
 	 */
-	function showPopover(title, text, buttonText, callBack) {
+	function showPopover(title, text, acceptBtnText, cancelBtnText, callBack) {
 		$(".popoverTitle").text(title);
 		$(".popoverText").text(text);
-		$(".popoverConfirm").text(buttonText);
 		
+		if (acceptBtnText == "") {
+			$(".popoverConfirm").addClass("hidden");
+		} else {
+			$(".popoverConfirm").text(acceptBtnText);
+			$(".popoverConfirm").removeClass("hidden");
+		}
+		if (cancelBtnText == "") {
+			$(".popoverCancel").addClass("hidden");
+		} else {
+			$(".popoverCancel").text(cancelBtnText);
+			$(".popoverCancel").removeClass("hidden");
+		}
+		
+		$(".popoverCancel").off();
 		$(".popoverCancel").on("click", function() {
 			$(".popoverCancel").off();
 			$(".overlay").addClass("hidden");
 		});
+		$(".popoverConfirm").off();
 		$(".popoverConfirm").on("click", function() {
 			$(".popoverConfirm").off();
 			callBack();
+			callBack = undefined;
 			$(".overlay").addClass("hidden");
 		});
 		$(".overlay").removeClass("hidden");
@@ -288,8 +303,12 @@ var Events = (function() {
 							
 							promise.resolve();
 							
-							//redirect to main category view
-							Events.navigate.toHome();
+							if (userData.password.isTemporaryPassword) {
+								Events.navigate.toLogin('resetPassword', user, pw);
+							} else {
+								//redirect to main category view
+								Events.navigate.toHome();
+							}
 						}
 					});
 				}
@@ -304,27 +323,6 @@ var Events = (function() {
 			logout: function() {
 				dataRef.unauth();
 				Events.navigate.toLogin();
-			},
-			
-			/**
-			 *	This function toggles the UI elements between
-			 *	the login form and the create user form.
-			 *	@param - none
-			 */
-			toggleCreateUser: function() {
-				if ($("#signUpBtn").hasClass("hidden")) {
-					$("#signUpBtn").removeClass("hidden");
-					$("#loginBtn").addClass("hidden");
-					$("#toggleCreateUserBtn").text("Already have an account");
-					$("#loginError").text("");
-					$(".newUserFields").removeClass("hidden");
-				} else {
-					$("#signUpBtn").addClass("hidden");
-					$("#loginBtn").removeClass("hidden");
-					$("#toggleCreateUserBtn").text("Create an account");
-					$("#loginError").text("");
-					$(".newUserFields").addClass("hidden");
-				}
 			},
 			
 			/**
@@ -385,6 +383,61 @@ var Events = (function() {
 					});
 				} else {
 					$("#loginError").text("All fields are required.");
+				}
+			},
+			
+			sendPwResetEmail: function() {
+				try {
+					var user = document.getElementById('loginUser').value;
+				} catch (error) {
+					$("#loginError").text("Please enter your email.");
+				}
+				
+				var allFieldsValid = true;
+				$(".mdl-textfield").each(function(i, index) {
+					if ($(index).hasClass("is-invalid")) {
+						allFieldsValid = false;
+					}
+				});
+				
+				if (!allFieldsValid) {
+					$("#loginError").text("Invalid field.");
+				} else if (user != "") {
+					dataRef.resetPassword({
+					  email : user
+					}, function(error) {
+					  if (error === null) {
+						showPopover("Reset Password", "Password reset email sent successfully", "OK", "", function() {
+							Events.navigate.toLogin()
+						});
+					  } else {
+						$("#loginError").text("Error sending password reset email.");
+					  }
+					});
+				}
+			},
+			
+			resetPassword: function() {
+				try {
+					var user = document.getElementById('loginStaticUser').value,
+					oldPw = document.getElementById('loginStaticPw').value,
+					pw = document.getElementById('loginPw').value;
+				} catch (error) {
+					$("#loginError").text("Please enter a new password.");
+				}
+				
+				if (user != "") {
+					dataRef.changePassword({
+					  email       : user,
+					  oldPassword : oldPw,
+					  newPassword : pw
+					}, function(error) {
+					  if (error === null) {
+						Events.navigate.toHome();
+					  } else {
+						$("#loginError").text("Unable to reset password at this time.");
+					  }
+					});
 				}
 			},
 			
@@ -656,7 +709,7 @@ var Events = (function() {
 			 *	This function navigates to the login page.
 			 *	@param - none
 			 */
-			toLogin: function() {
+			toLogin: function(layout, user, pw) {
 				//update main menu bar
 				$("#backBtn").addClass("hidden");
 				$("#headerTitle").text("Events");
@@ -675,13 +728,34 @@ var Events = (function() {
 					componentHandler.upgradeElement(document.getElementById('loginBtn'));
 					componentHandler.upgradeElement(document.getElementById('signUpBtn'));
 					
+					//display correct layout
+					$(".loginCreate").addClass("hidden");
+					$(".loginDefault").addClass("hidden");
+					$(".loginResetEmail").addClass("hidden");
+					$(".loginResetPassword").addClass("hidden");
+					if (layout == undefined) {
+						$(".loginDefault").removeClass("hidden");
+					} else if (layout == 'create') {
+						$(".loginCreate").removeClass("hidden");
+					} else if (layout == 'resetEmail') {
+						$(".loginResetEmail").removeClass("hidden");
+					} else if (layout == 'resetPassword') {
+						$(".loginResetPassword").removeClass("hidden");
+						$("#loginStaticUser").val(user);
+						$("#loginStaticPw").val(pw);
+					}
+					
 					//event listener for logging in
 					$("body").off();
 					$("body").on("keypress", function(event) {
 						if (event.which == 10 || event.which == 13) {
 							$("body").off("keypress");
-							if ($("#loginBtn").hasClass("hidden")) {
+							if (layout == 'create') {
 								Events.authentication.createUser();
+							} else if (layout == 'resetPassword') {
+								Events.authentication.resetPassword();
+							}  else if (layout == 'resetEmail') {
+								Events.authentication.sendPwResetEmail();
 							} else {
 								Events.authentication.login();
 							}
@@ -710,7 +784,9 @@ var Events = (function() {
 					
 					$("#deleteBtn").off();
 					$("#deleteBtn").on("click", function() {
-						showPopover("Confirm Delete", "Are you sure you want to delete this category and all its data?", "Delete", Events.category.removeCategory.bind(this, key));
+						showPopover("Confirm Delete", "Are you sure you want to delete this category and all its data?", "Delete", "Cancel", function() {
+							Events.category.removeCategory(key)
+						});
 					});
 					
 					componentHandler.upgradeElement(document.getElementById('detailPage'));
