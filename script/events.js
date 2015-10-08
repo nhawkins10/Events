@@ -727,6 +727,9 @@ var Events = (function() {
 					componentHandler.upgradeElement(document.getElementById('toggleCreateUserBtn'));
 					componentHandler.upgradeElement(document.getElementById('loginBtn'));
 					componentHandler.upgradeElement(document.getElementById('signUpBtn'));
+					componentHandler.upgradeElement(document.getElementById('contactNameContainer'));
+					componentHandler.upgradeElement(document.getElementById('contactEmailContainer'));
+					componentHandler.upgradeElement(document.getElementById('contactTextContainer'));
 					
 					//display correct layout
 					$(".loginCreate").addClass("hidden");
@@ -1139,6 +1142,36 @@ var Events = (function() {
 				for (var i=0; i<dayOfWeek.length; i++) {
 					ctx.fillText(Math.round((dayOfWeek[i]/dates.length)*100) + "%",((canvasWidth)/14)*((2*i)+1) - 8,canvasHeight - 27);
 				}
+			}
+		},
+		
+		appInformation: {
+			currentSlide: 1,
+			
+			nextSlide: function() {
+				if (this.currentSlide == $(".slideshowImages").children().length) {
+					this.currentSlide = 1;
+				} else {
+					this.currentSlide++;
+				}
+				$(".slideImage").addClass("hidden");
+				$(".slide" + this.currentSlide).removeClass("hidden");
+				
+				$(".slideText").addClass("hidden");
+				$(".slideText" + this.currentSlide).removeClass("hidden");
+			},
+			
+			prevSlide: function() {
+				if (this.currentSlide == 1) {
+					this.currentSlide = $(".slideshowImages").children().length;
+				} else {
+					this.currentSlide--;
+				}
+				$(".slideImage").addClass("hidden");
+				$(".slide" + this.currentSlide).removeClass("hidden");
+				
+				$(".slideText").addClass("hidden");
+				$(".slideText" + this.currentSlide).removeClass("hidden");
 			}
 		}
 	};
