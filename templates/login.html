@@ -57,16 +57,24 @@
 	</div>
 </div>
 
-<div class='appInformation'>
-	<div class='overview'>
+<div class='mdl-grid'>
+	<!-- overview section -->
+	<div class='mdl-cell mdl-cell--12-col'>
 		<div class='overviewPhoto'>
 			Keep track of events in your life, big or small.
 		</div>
-		<p class='overviewParagraph'>
-			When was the last time you got groceries? Did you have the oil changed recently? How often do you eat out? So many events happen on a regular basis that it can be challenging to remember when they all took place. Events provides a simple, easy to use way to track when these things happen.
-		</p>
 	</div>
-	<div class='slideshowContainer'>
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	<div class='mdl-cell mdl-cell--8-col mdl-card'>
+		<div class='mdl-card__title'>
+			When was the last time you got groceries? Did you have the oil changed recently? How often do you eat out? So many events happen on a regular basis that it can be challenging to remember when they all took place. Events provides a simple, easy to use way to track when these things happen.
+		</div>
+	</div>
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	
+	<!-- slide show section -->
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--hide-phone'></div>
+	<div class='mdl-cell mdl-cell--4-col'>
 		<div class='slideshowBtnContainer'>
 			<div class='slideshowBtn slideshowBackBtn' onclick='Events.appInformation.prevSlide()'></div>
 			<div class='slideshowBtn slideshowNextBtn' onclick='Events.appInformation.nextSlide()'></div>
@@ -87,65 +95,78 @@
 			<li class='slideText5 slideText hidden'>...or create create a new category.</li>
 		</ul>
 	</div>
-	<div class='devices'>
-		<p class='overviewHeader'>Use Anywhere</p>
-		<table class='devicesCardContainer'>
-			<tr><td>
-			<div class='phoneCard mdl-card'>
-				<div class='mdl-card__title mdl-card--border'>Smartphone</div>
-				<div class='mdl-card__supporting-text'><i class='deviceIcon mdl-layout-icon material-icons'>phone_iphone</i></div>
-			</div></td>
-			<td><div class='tabledCard mdl-card'>
-				<div class='mdl-card__title mdl-card--border'>Tablet</div>
-				<div class='mdl-card__supporting-text'><i class='deviceIcon mdl-layout-icon material-icons'>tablet_android</i></div>
-			</div></td>
-			<td><div class='computerCard mdl-card'>
-				<div class='mdl-card__title mdl-card--border'>Computer</div>
-				<div class='mdl-card__supporting-text'><i class='deviceIcon mdl-layout-icon material-icons'>computer</i></div>
-			</div></td>
-		</table>
-		<p class='overviewParagraph'>Events is accessable on the web so you're free to use it from any device. Track events from home or work on your computer. Then pick up where you left off with your phone or tablet. Events will work the same on any device with a modern web browser.</p>
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--hide-phone'></div>
+	
+	<!-- devices section -->
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	<div class='mdl-cell mdl-cell--4-col mdl-card'>
+		<div class='mdl-card__title'>Use Anywhere</div>
+		<div class='mdl-card__supporting-text'>Events works on your smartphone, tablet, or computer. Start on one device, and pick up where you left off on  another.</div>
 	</div>
-	<div class='pricing'>
-		<p class='overviewHeader'>Pricing</p>
-		<p class='overviewParagraph'>Pricing is simple. Sign up and get 60 days totally free. If you love it, all you pay is $10 per year.</p>
+	<div class='mdl-cell mdl-cell--4-col mdl-card'>
+		<div class='mdl-card__supporting-text centerText'>
+			<i class='largeIcon mdl-layout-icon material-icons'>phone_iphone</i>
+		</div>
 	</div>
-	<div class='contact'>
-		<p class='overviewHeader'>Contact</p>
-		<div class="centeredCard mdl-card mdl-shadow--2dp">
-			<form action="#">
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contactNameContainer">
-					<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="contactName" />
-					<label class="mdl-textfield__label" for="contactName">Your Name</label>
-					<span class="mdl-textfield__error">Must enter a name.</span>
-				</div>
-				<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contactEmailContainer">
-					<input class="mdl-textfield__input" type="email"  id="contactEmail" />
-					<label class="mdl-textfield__label" for="contactEmail">Email Address</label>
-					<span class="mdl-textfield__error">Must be an email.</span>
-				</div>
-				<div class="mdl-textfield mdl-js-textfield" id="contactTextContainer">
-					<textarea class="mdl-textfield__input" type="text" rows= "6" id="contactText" ></textarea>
-					<label class="mdl-textfield__label" for="contactText">Your message...</label>
-				</div>
-			</form>
-			<div class="loginBtnContainer mdl-card__actions">
-				<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='contactBtn' onclick=''>
-				  Send
-				</button>
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	
+	
+	<!-- pricing section -->
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--hide-phone mdl-card'>
+		<div class='mdl-card__supporting-text centerText'>
+			<i class='largeIcon mdl-layout-icon material-icons'>credit_card</i>
+		</div>
+	</div>
+	<div class='mdl-cell mdl-cell--4-col mdl-card'>
+		<div class='mdl-card__title'>Pricing</div>
+		<div class='mdl-card__supporting-text'>Pricing is simple. Sign up and get 60 days totally free. If you love it, all you pay is $10 per year.</div>
+	</div>
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--hide-desktop mdl-cell--hide-tablet mdl-card'>
+		<div class='mdl-card__supporting-text centerText'>
+			<i class='largeIcon mdl-layout-icon material-icons'>credit_card</i>
+		</div>
+	</div>
+	<div class='mdl-cell mdl-cell--2-col mdl-cell--hide-tablet mdl-cell--hide-phone'></div>
+	
+	
+	<!-- contact section -->
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--hide-phone'></div>
+	<div class="mdl-cell mdl-cell--4-col mdl-card mdl-shadow--2dp">
+		<div class='mdl-card__title'>Contact</div>
+		<form class='mdl-card__supporting-text' action="#">
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contactNameContainer">
+				<input class="mdl-textfield__input" type="text" pattern="[A-Za-z]*" id="contactName" />
+				<label class="mdl-textfield__label" for="contactName">Your Name</label>
+				<span class="mdl-textfield__error">Must enter a name.</span>
 			</div>
+			<div class="mdl-textfield mdl-js-textfield mdl-textfield--floating-label" id="contactEmailContainer">
+				<input class="mdl-textfield__input" type="email"  id="contactEmail" />
+				<label class="mdl-textfield__label" for="contactEmail">Email Address</label>
+				<span class="mdl-textfield__error">Must be an email.</span>
+			</div>
+			<div class="mdl-textfield mdl-js-textfield" id="contactTextContainer">
+				<textarea class="mdl-textfield__input" type="text" rows= "6" id="contactText" ></textarea>
+				<label class="mdl-textfield__label" for="contactText">Your message...</label>
+			</div>
+		</form>
+		<div class="loginBtnContainer mdl-card__actions">
+			<button class="mdl-button mdl-js-button mdl-button--raised mdl-button--accent" id='contactBtn' onclick=''>
+			  Send
+			</button>
 		</div>
 	</div>
-	<div class='mdl-mini-footer'>
-		<div class='mdl-mini-footer__left-section'>
-			<div class='mdl-logo'>
-				<img src='img/touch-icon-iphone.png'>
-			</div>
+	<div class='mdl-cell mdl-cell--4-col mdl-cell--2-col-tablet mdl-cell--hide-phone'></div>
+</div>
+<div class='mdl-mini-footer'>
+	<div class='mdl-mini-footer__left-section'>
+		<div class='mdl-logo'>
+			<img src='img/touch-icon-iphone.png'>
 		</div>
-		<div class="mdl-mini-footer__right-section">
-			<ul class='mdl-mini-footer__link-list'>
-				<li>Copyright 2015. Events. All rights reserved.</li>
-			</ul>
-		</div>
+	</div>
+	<div class="mdl-mini-footer__right-section">
+		<ul class='mdl-mini-footer__link-list'>
+			<li>Copyright 2015. Events. All rights reserved.</li>
+		</ul>
 	</div>
 </div>

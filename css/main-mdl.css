@@ -42,6 +42,10 @@
 	z-index: 1000;
 }
 
+.centerText {
+	text-align: center;
+}
+
 @keyframes spinner {
     to {transform: rotate(360deg);}
 }
@@ -115,37 +119,20 @@
   */
   
 .overviewPhoto{
-	background: url(../img/Hydrangeas.jpg) no-repeat;
+	background: url(../img/Hydrangeas.jpg);
 	height: 350px;
 	text-align: center;
 	color: white;
 	font-size: 30px;
-	line-height: 350px;
+	line-height: 35px;
 	font-family: Roboto, Helvetica, sans-serif;
 	letter-spacing: 1px;
-}
-
-.overviewHeader {
-	font-family: Roboto, Helvetica, sans-serif;
-    font-size: x-large;
-    padding-left: 30px;
-    margin-bottom: 0px;
-}
-
-.overviewParagraph {
-	font-size: 18px;
-	padding: 30px;
-    letter-spacing: 1px;
-    font-family: Roboto, Helvetica, sans-serif;
-}
-
-.slideshowContainer {
-	height: 700px;
-	margin-left: calc(50% - 122px);
+	width: 100%;
 }
 
 .slideshowFrame {
 	height: 500px;
+	margin-left: 50px;
 }
 
 .slideshowFrame img {
@@ -159,6 +146,7 @@
 	padding: 0;
 	left: 17px;
 	z-index: 1000;
+	margin-left: 50px;
 }
 
 .slideshowImages img {
@@ -172,6 +160,7 @@
 	padding: 0;
 	text-align: center;
 	font-family: Roboto, Helvetica, sans-serif;
+	margin-left: 50px;
 }
 
 .slideshowBtnContainer {
@@ -179,7 +168,7 @@
     width: 320px;
     top: 290px;
     position: relative;
-    margin-left: -37px;
+	margin-left: 13px;
 }
 
 .slideshowBtn {
@@ -259,25 +248,8 @@
 	transform: skew(-15deg, 0deg);
 }
 
-.devicesCardContainer {
-	width: 100%;
-}
-
-.devicesCardContainer td {
-	text-align: center;
-}
-
-.devicesCardContainer .mdl-card {
-	width: 150px;
-	min-height: 130px;
-	margin-bottom: 15px;
-	margin-left: 15px;
-}
-
-.deviceIcon {
-	font-size: 70px;
-    text-align: center;
-    margin-left: 24px;
+.largeIcon {
+	font-size: 100px;
 }
 
 .mdl-logo img {
