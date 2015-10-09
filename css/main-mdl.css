@@ -177,16 +177,15 @@
 .slideshowBtnContainer {
 	height: 75px;
     width: 320px;
-    top: 250px;
+    top: 290px;
     position: relative;
     margin-left: -37px;
 }
 
 .slideshowBtn {
 	top: 0;
-    width: 20px;
+    width: 10px;
     height: 75px;
-    background-color: #ddd;
 	position: absolute;
 	cursor: pointer;
 	z-index: 1100;
@@ -196,8 +195,68 @@
 	left: 0px;
 }
 
+.slideshowBackBtn:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 51%;
+	width: 100%;
+	background: #ddd;
+	-webkit-transform: skew(-15deg, 0deg);
+	-moz-transform: skew(-15deg, 0deg);
+	-ms-transform: skew(-15deg, 0deg);
+	-o-transform: skew(-15deg, 0deg);
+	transform: skew(-15deg, 0deg);
+}
+
+.slideshowBackBtn:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 0;
+	height: 50%;
+	width: 100%;
+	background: #ddd;
+	-webkit-transform: skew(15deg, 0deg);
+	-moz-transform: skew(15deg, 0deg);
+	-ms-transform: skew(15deg, 0deg);
+	-o-transform: skew(15deg, 0deg);
+	transform: skew(15deg, 0deg);
+}
+
 .slideshowNextBtn {
 	right: 0px;
+}
+
+.slideshowNextBtn:before {
+	content: '';
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 51%;
+	width: 100%;
+	background: #ddd;
+	-webkit-transform: skew(15deg, 0deg);
+	-moz-transform: skew(15deg, 0deg);
+	-ms-transform: skew(15deg, 0deg);
+	-o-transform: skew(15deg, 0deg);
+	transform: skew(15deg, 0deg);
+}
+
+.slideshowNextBtn:after {
+	content: '';
+	position: absolute;
+	top: 50%;
+	right: 0;
+	height: 50%;
+	width: 100%;
+	background: #ddd;
+	-webkit-transform: skew(-15deg, 0deg);
+	-moz-transform: skew(-15deg, 0deg);
+	-ms-transform: skew(-15deg, 0deg);
+	-o-transform: skew(-15deg, 0deg);
+	transform: skew(-15deg, 0deg);
 }
 
 .devicesCardContainer {
