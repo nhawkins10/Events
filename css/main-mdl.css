@@ -118,6 +118,28 @@
   * ---------------------------------------------
   */
   
+.overview {
+	text-align: center;
+}
+  
+.tagline {
+	font-size: 30px;
+	font-family: Roboto, Helvetica, sans-serif;
+	line-height: 35px;
+}
+
+.taglineVariable {
+	font-size: 30px;
+	font-family: Shadows Into Light, cursive;
+	border-bottom: 1px solid #000;
+}
+
+.taglineSummary {
+	margin-top: 25px;
+	font-size: 18px;
+	color: rgba(0, 0, 0, .54);
+}
+  
 .overviewPhoto{
 	background: url(../img/Hydrangeas.jpg);
 	height: 350px;

@@ -1172,6 +1172,16 @@ var Events = (function() {
 				
 				$(".slideText").addClass("hidden");
 				$(".slideText" + this.currentSlide).removeClass("hidden");
+			},
+			
+			rotateTagline: function() {
+				var options = ['went for a run',
+					'got an oil change',
+					'called in sick',
+					'took your dog to the vet'];
+					
+				$(".taglineVariable").text(options[Math.floor(Math.random() * options.length)]);
+				$(".taglineVariable").css("color", translateColor((Math.floor(Math.random() * 6).toString())).hex);
 			}
 		}
 	};
