@@ -29,6 +29,30 @@
 
 .whiteText {
 	color: white;
+}
+
+.redText {
+	color: #F44336;
+}
+
+.orangeText {
+	color: #FF9800;
+}
+
+.brownText {
+	color: #795548;
+}
+
+.greenText {
+	color: #4CAF50;
+}
+
+.blueText {
+	color: #00BCD4;
+}
+
+.purpleText {
+	color: #9C27B0;
 }	
 
 .hidden {
@@ -140,16 +164,9 @@
 	color: rgba(0, 0, 0, .54);
 }
   
-.overviewPhoto{
-	background: url(../img/Hydrangeas.jpg);
-	height: 350px;
-	text-align: center;
-	color: white;
-	font-size: 30px;
-	line-height: 35px;
-	font-family: Roboto, Helvetica, sans-serif;
-	letter-spacing: 1px;
-	width: 100%;
+.sectionTitle {
+	font-family: Shadows Into Light, cursive;
+	font-size: 20px;
 }
 
 .slideshowFrame {

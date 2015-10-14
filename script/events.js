@@ -764,6 +764,10 @@ var Events = (function() {
 							}
 						}
 					});
+					
+					//start interval timer to rotate tagline
+					Events.appInformation.rotateTagline();
+					setInterval(Events.appInformation.rotateTagline.bind(this), 5000);
 				});
 			},
 			
@@ -1145,9 +1149,20 @@ var Events = (function() {
 			}
 		},
 		
+		/**
+		 *	The appInformation module exposes helper functions related to 
+		 *	the information section displayed on the login page. 
+		 */
 		appInformation: {
 			currentSlide: 1,
+			lastColor: -1,
+			lastOption: -1,
 			
+			/**
+			 *	This function moves to the next slide on the device
+			 *	slideshow of the login page information section.
+			 *	@param - none
+			 */
 			nextSlide: function() {
 				if (this.currentSlide == $(".slideshowImages").children().length) {
 					this.currentSlide = 1;
@@ -1161,6 +1176,11 @@ var Events = (function() {
 				$(".slideText" + this.currentSlide).removeClass("hidden");
 			},
 			
+			/**
+			 *	This function moves to the previous slide on the device
+			 *	slideshow of the login page information section.
+			 *	@param - none
+			 */
 			prevSlide: function() {
 				if (this.currentSlide == 1) {
 					this.currentSlide = $(".slideshowImages").children().length;
@@ -1174,14 +1194,40 @@ var Events = (function() {
 				$(".slideText" + this.currentSlide).removeClass("hidden");
 			},
 			
+			/**
+			 *	This function rotates through examples of things 
+			 *	that can be tracked with this app. It also changes
+			 *	the color of the text each time.
+			 *	@param - none
+			 */
 			rotateTagline: function() {
 				var options = ['went for a run',
 					'got an oil change',
 					'called in sick',
-					'took your dog to the vet'];
+					'took your dog to the vet',
+					'went for a bike ride',
+					'took a vacation',
+					'went to the dentist',
+					'ate out',
+					'washed your car',
+					'got gas'];
 					
-				$(".taglineVariable").text(options[Math.floor(Math.random() * options.length)]);
-				$(".taglineVariable").css("color", translateColor((Math.floor(Math.random() * 6).toString())).hex);
+				var randomOption = Math.floor(Math.random() * options.length);
+				var randomColor = Math.floor(Math.random() * 6) + 1;
+				
+				//make sure we don't use the same thing twice in a row
+				while (randomOption == this.lastOption) {
+					randomOption = Math.floor(Math.random() * options.length);
+				}
+				while (randomColor == this.lastColor) {
+					randomColor = Math.floor(Math.random() * 6) + 1;
+				}
+					
+				$(".taglineVariable").text(options[randomOption]);
+				$(".taglineVariable").css("color", translateColor((randomColor.toString())).hex);
+				
+				this.lastOption = randomOption;
+				this.lastColor = randomColor;
 			}
 		}
 	};
