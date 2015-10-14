@@ -1,0 +1,44 @@
+To Do
+[] style login buttons
+[] add to home screen prompt
+[] fix add button positioning on iphone
+[] delete individual events
+[] edit category settings (title, color)
+[] prompt to add data on empty home screen
+	* ​"Click the plus button to add a category!"
+[] syncing
+	[] when category deleted on one window, second window doesn't update
+	[] when event added in one window, may be in incorrect order on second window
+[] fix slideshow spacing on some devices
+[x] app description on login page
+[x] high res canvas
+[x] style login page
+[x] style add page
+[x] fix loading spinners
+[x] Add length limit on new category field
+[x] update delete category prompt
+[x] allow password resets
+[x] key listener fails after failed login attempt (event isn't registered again after failure)
+
+future features
+* search on categories
+* paywall
+* store value with event
+* compare two categories - plot events from each on some kind of graph so we can view correlations
+* geotag events and show map of locations
+
+material design icons: https://www.google.com/design/icons/
+
+Ideas
+---------
+for top of info section on login page: When was the last time you:
+- went to the eye doctor
+- went to the dentist
+- took your dog to the vet
+- called your mom
+- went for a run
+- got an oil change
+- took a vacation
+- called in sick
+- ate out
+Events can help you track all of these things and many more.
