@@ -3,6 +3,7 @@ To Do
 [] add to home screen prompt
 [] fix add button positioning on iphone
 [] delete individual events
+	[] show data tab on refresh
 [] edit category settings (title, color)
 [] prompt to add data on empty home screen
 	* ​"Click the plus button to add a category!"
@@ -33,12 +34,6 @@ Ideas
 ---------
 for top of info section on login page: When was the last time you:
 - went to the eye doctor
-- went to the dentist
-- took your dog to the vet
 - called your mom
-- went for a run
 - got an oil change
-- took a vacation
-- called in sick
-- ate out
 Events can help you track all of these things and many more.

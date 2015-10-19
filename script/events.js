@@ -576,7 +576,7 @@ var Events = (function() {
 					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").orderByChild("time").on("child_added", function(snapshot) {
 						var temp = snapshot.val();
 						//create HTML for event
-						Events.event.displayEntry(temp.time, name.color);
+						Events.event.displayEntry(temp.time, name.color, key, snapshot.key());
 						
 						//add date to list for graphics
 						var arr = temp.time.split(/[- :]/),
@@ -598,9 +598,14 @@ var Events = (function() {
 			 * 	@param timestamp - the time of the event
 			 *	@param color - the id of the color to use
 			 */
-			displayEntry: function(timestamp, color) {
+			displayEntry: function(timestamp, color, categoryKey, eventKey) {
 				var entryList = document.getElementById("eventList");
-				entryList.innerHTML = "<li class='eventItem " + translateColor(color).name + "'>" + formatDate(timestamp) + "</li>" + entryList.innerHTML;
+				entryList.innerHTML = "<li class='eventItem " + translateColor(color).name + "'>"
+					+ "<span>" + formatDate(timestamp) + "</span>"
+					+ "<span onclick=\"javascript:Events.event.confirmDeleteEvent(\'" + categoryKey + "\',\'" + eventKey + "\')\">"
+					+ "<i class=\"material-icons\">delete</i>"
+					+ "</span>"
+					+ "</li>" + entryList.innerHTML;
 			},
 			
 			/**
@@ -697,6 +702,34 @@ var Events = (function() {
 				} else {
 					Events.navigate.toHome();
 				}
+			},
+			
+			/**
+			 *	This function handles a click on the delete icon
+			 *	on a specific event on the data tab of the delete
+			 *	view. It triggers the popup to confirm deleting 
+			 *	the selected event.
+			 *	@param categoryKey - the key of the current category
+			 *	@param eventKey - the key of event to delete
+			 */
+			confirmDeleteEvent: function(categoryKey, eventKey) {
+				showPopover("Delete Event", "Are you sure you want to delete this entry?", "Delete", "Cancel", function() {
+					Events.event.deleteEvent(categoryKey, eventKey);
+				});
+			},
+			
+			/**
+			 *	This function removes a given event from the data store.
+			 *	@param categoryKey - the key of the current category
+			 *	@param eventKey - the key of the event to delete
+			 */
+			deleteEvent: function(categoryKey, eventKey) {
+				var authTokens = JSON.parse(localStorage.events);
+				
+				dataRef.child("users").child(authTokens.uid).child("categories").child(categoryKey).child("events").child(eventKey).remove();
+				
+				//navigate to detail page to refresh data
+				Events.navigate.toDetail(categoryKey);
 			}
 		},
 		
@@ -784,11 +817,13 @@ var Events = (function() {
 				$("#deleteBtn").removeClass("hidden");
 				
 				$("#pageContainer").load("templates/detail.html", function() {
+					//clear and re-register the event listener for the add button
 					$("#add").off();
 					$("#add").on("click", function() {
 						Events.event.addEvent(key);
 					});
 					
+					//clear and re-register the delete category event listener
 					$("#deleteBtn").off();
 					$("#deleteBtn").on("click", function() {
 						showPopover("Confirm Delete", "Are you sure you want to delete this category and all its data?", "Delete", "Cancel", function() {
