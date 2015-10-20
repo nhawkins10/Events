@@ -299,6 +299,14 @@
  * ---------     Category styles     ------------
  * ----------------------------------------------
  */
+ 
+.introPrompt {
+	text-align: center;
+    padding: 20px;
+    font-size: 20px;
+    font-family: Roboto, Helvetica, sans-serif;
+    margin-top: 50px;
+ }
 .categoryItem {
 	cursor: pointer;
 	font-size: 16px;

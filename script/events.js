@@ -475,6 +475,9 @@ var Events = (function() {
 					//hide loading spinner
 					$(".spinner").addClass("hidden");
 					
+					//hide add category prompt
+					$(".introPrompt").addClass("hidden");
+					
 					//create HTML for category
 					Events.category.displayCategory(temp.name, temp.color, snapshot.key());
 				});
@@ -884,6 +887,14 @@ var Events = (function() {
 				
 				$("#pageContainer").load("templates/home.html", function() {
 					Events.category.displayAllCategories();
+					
+					if (document.getElementById('categoryList').childElementCount == 0) {
+						//hide loading spinner
+						$(".spinner").addClass("hidden");
+						
+						//show add category prompt
+						$(".introPrompt").removeClass("hidden");
+					}
 				});
 			}
 		},
