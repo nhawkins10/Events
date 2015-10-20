@@ -727,9 +727,6 @@ var Events = (function() {
 				var authTokens = JSON.parse(localStorage.events);
 				
 				dataRef.child("users").child(authTokens.uid).child("categories").child(categoryKey).child("events").child(eventKey).remove();
-				
-				//navigate to detail page to refresh data
-				Events.navigate.toDetail(categoryKey);
 			}
 		},
 		
@@ -810,6 +807,7 @@ var Events = (function() {
 			 *	@param key - the category key to display details for
 			 */
 			toDetail: function(key) {
+				var authTokens = JSON.parse(localStorage.events);
 				removeCallbacks(key);
 				
 				//update main menu bar
@@ -829,6 +827,12 @@ var Events = (function() {
 						showPopover("Confirm Delete", "Are you sure you want to delete this category and all its data?", "Delete", "Cancel", function() {
 							Events.category.removeCategory(key)
 						});
+					});
+					
+					//attach event listener for when event is removed
+					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").off();
+					dataRef.child("users").child(authTokens.uid).child("categories").child(key).child("events").on("child_removed", function(oldChildSnapshot) {
+						Events.navigate.toDetail(key);
 					});
 					
 					componentHandler.upgradeElement(document.getElementById('detailPage'));
@@ -990,16 +994,19 @@ var Events = (function() {
 					
 					if (Math.round(moment.duration(average).asYears()) > 0) {
 						avgTime = Math.round(moment.duration(average).asYears());
-						avgTimeLabel = "year" + (moment.duration(average).asYears() > 1 ? "s" : "")
+						avgTimeLabel = "year" + (moment.duration(average).asYears() > 1 ? "s" : "");
 					} else if (Math.round(moment.duration(average).asMonths()) > 0) {
 						avgTime = Math.round(moment.duration(average).asMonths());
-						avgTimeLabel = "month" + (moment.duration(average).asMonths() > 1 ? "s" : "")
+						avgTimeLabel = "month" + (moment.duration(average).asMonths() > 1 ? "s" : "");
 					} else if (Math.round(moment.duration(average).asDays()) > 0) {
 						avgTime = Math.round(moment.duration(average).asDays());
-						avgTimeLabel = "day" + (moment.duration(average).asDays() > 1 ? "s" : "")
+						avgTimeLabel = "day" + (moment.duration(average).asDays() > 1 ? "s" : "");
 					} else if (Math.round(moment.duration(average).asHours()) > 0) {
 						avgTime = Math.round(moment.duration(average).asHours());
-						avgTimeLabel = "hour" + (moment.duration(average).asHours() > 1 ? "s" : "")
+						avgTimeLabel = "hour" + (moment.duration(average).asHours() > 1 ? "s" : "");
+					} else {
+						avgTime = Math.round(moment.duration(average).asMinutes());
+						avgTimeLabel = "minute" + (moment.duration(average).asMinutes() > 1 || moment.duration(average).asMinutes() == 0 ? "s" : "");
 					}
 				}
 				
@@ -1122,7 +1129,7 @@ var Events = (function() {
 					ctx.globalAlpha = 1;
 					ctx.fillStyle = "#000000";
 					ctx.fillText(timeTexts[i], (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 9);
-					ctx.fillText(Math.round((timeOfDay[i]/total) * 100) + "%", (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 23);
+					ctx.fillText((Math.round((timeOfDay[i]/total) * 100) || "0") + "%", (canvasHeight - offsetLeft + (canvasHeight/8)) + 15, (canvasHeight/12) * ((2 * i)+1) + offsetTop - (height/2) + 23);
 				}
 				ctx.globalAlpha = 1;
 			},
