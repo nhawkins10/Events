@@ -356,8 +356,23 @@
 
 .dashboardCard {
 	margin-top: 20px;
-	margin-left: 20px;
 	float: left;
+}
+
+/* center the cards when screen is too narrow to
+   display two cards side by side. */
+@media (max-width: 721px) {
+	.dashboardCard {
+		margin-left: calc(50% - 165px);
+	}
+}
+
+/* give the cards a left margin when they
+   can be displayed side by side */
+@media (min-width: 721px) {
+	.dashboardCard {
+		margin-left: 20px;
+	}
 }
 
 .dashboardCard:last-child {
