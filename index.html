@@ -9,11 +9,8 @@
 <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:300,400,500,700" type="text/css">
 <link href='https://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
 
-<!--<link rel="stylesheet" type="text/css" href="css/login.css">-->
 <link rel="stylesheet" type="text/css" href="css/main-mdl.css">
-<!--<link rel="stylesheet" type="text/css" href="css/home.css">-->
-<!--<link rel="stylesheet" type="text/css" href="css/detail.css">-->
-<!--<link rel="stylesheet" type="text/css" href="css/add.css">-->
+<link rel="stylesheet" type="text/css" href="css/addtohomescreen.css">
 
 <link rel="icon" type="image/png" href="img/touch-icon-iphone.png">
 <link rel="apple-touch-icon" href="img/touch-icon-iphone.png">
@@ -57,8 +54,15 @@
 <script src="https://storage.googleapis.com/code.getmdl.io/1.0.4/material.min.js"></script>
 <script src="script/jquery-min.js"></script>
 <script type="text/javascript" src="script/moment.js"></script>
+<script type="text/javascript" src="script/addtohomescreen.min.js"></script>
 <script src="script/events.js"></script>
 <script>
+	addToHomescreen({
+		skipFirstVisit: false,
+		icon: false,
+		maxDisplayCount: 1,
+		lifespan: 0
+	});
 	//check if user is authenticated then direct to correct page
 	if (!Events.authentication.userAuthenticated()) {
 		Events.navigate.toLogin();
