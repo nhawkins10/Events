@@ -5,7 +5,7 @@ To Do
 [] delete individual events
 	[] show data tab on refresh
 [] edit category settings (title, color)
-[] prompt to add data on empty home screen
+[x] prompt to add data on empty home screen
 	* ​"Click the plus button to add a category!"
 [] syncing
 	[] when category deleted on one window, second window doesn't update
