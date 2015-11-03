@@ -79,6 +79,7 @@ ul {
 .eventList {
 position: relative;
 left: 50%;
+width: 50%;
 margin-top: 50px;
 }
 

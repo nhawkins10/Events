@@ -1,7 +1,8 @@
 /**
  * The module responsible for managing all of the events.
  */
-define(['durandal/app', 'knockout', 'durandal/system', 'plugins/router', 'Shell/shell', 'Activity/activity'], function(app, ko, system, router, shell, activity) {
+define(['durandal/app', 'knockout', 'durandal/system', 'plugins/router', 'Shell/shell', 'Activity/activity', 'moment'], 
+	function(app, ko, system, router, shell, activity, moment) {
 	var pageTitle = ko.observable("Second Page"),
 	
 		//the list of all events that have been recorded
@@ -32,6 +33,12 @@ define(['durandal/app', 'knockout', 'durandal/system', 'plugins/router', 'Shell/
 			
 			return desiredData;
 		});
+		
+		
+		function formatDate(date) {
+			console.log(date);
+			return date;
+		}
 	
 	return {
 		shell: shell,
@@ -39,6 +46,7 @@ define(['durandal/app', 'knockout', 'durandal/system', 'plugins/router', 'Shell/
 		events: events,
 		activityIndex: activityIndex,
 		currentEvents: currentEvents,
+		formatDate: formatDate,
 		
 		/**
 		 * @param the id of the activity that is currently being viewed

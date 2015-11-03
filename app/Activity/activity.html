@@ -4,7 +4,8 @@
 		<div class="addButton" data-bind="click: function() { shell.addItem(0); }">+</div>
 	</div>
 	<ul class="activityList" data-bind="foreach: activities">
-		<li class="activity" data-bind="style: {background: $root.getColor($data.colorId)}, text: $data.name, click: function() {location.href='#event/' + $data.id}">
+		<li class="activity" data-bind="style: {background: $root.getColor($data.colorId)}, click: function() {location.href='#event/' + $data.id}">
+			<div class="activity-text" data-bind="text: $data.name"></div>
 		</li>
 	</ul>
 </div>
